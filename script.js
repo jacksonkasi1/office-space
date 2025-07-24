@@ -287,6 +287,9 @@ function handleTabSwitch(tabName) {
         case 'resources':
             renderResourcesContent(dashboardContent);
             break;
+        case 'blogs':
+            renderBlogsContent(dashboardContent);
+            break;
         default:
             renderHomeContent(dashboardContent);
     }
@@ -965,6 +968,273 @@ function renderResourcesContent(container) {
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderBlogsContent(container) {
+    container.innerHTML = `
+        <!-- Blogs Hero Section -->
+        <div class="blogs-hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Craft narratives <span class="highlight">that ignite</span> <span class="highlight-blue">inspiration</span>, <span class="highlight-green">knowledge</span>, and <span class="highlight-orange">entertainment</span></h2>
+                </div>
+                <div class="hero-image">
+                    <div class="placeholder-hero">
+                        <i class="fas fa-newspaper"></i>
+                        <div class="hero-badge">FEATURED</div>
+                    </div>
+                    <div class="hero-article-info">
+                        <div class="author-info">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="author-name">Jackson • 8 min read</span>
+                        </div>
+                        <h3>Essential Project Management Strategies for Modern Teams</h3>
+                        <p>Discover proven methodologies and frameworks that successful organizations use to deliver projects on time and within budget...</p>
+                        <div class="article-meta">
+                            <span class="category">Business</span>
+                            <span class="read-time">8 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest News Section -->
+        <div class="blogs-section">
+            <div class="section-header-blogs">
+                <h3>Latest News</h3>
+                <a href="#" class="see-all">See all →</a>
+            </div>
+            <div class="blogs-grid">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog tech">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="blog-category">Technology</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Software Development Best Practices and Productivity Tips</h4>
+                        <p>Learn essential development methodologies and tools that help teams deliver high-quality software efficiently...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">April 5 • 8 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog sports">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <div class="blog-category">Sports</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Team Leadership Strategies for Competitive Success</h4>
+                        <p>Explore effective leadership techniques and team management approaches that drive performance and results...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">Leadership • 6 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog business">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="blog-category">Business</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Strategic Partnership Development: Building Strong Client Relationships</h4>
+                        <p>Explore effective strategies for developing long-term partnerships that drive mutual growth and success...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">Business • 5 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog finance">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="blog-category">Finance</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Financial Planning Strategies for Growing Businesses</h4>
+                        <p>Comprehensive guide to budgeting, forecasting, and investment strategies that help companies scale effectively...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">Finance • 6 min read</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Must Read Section -->
+        <div class="blogs-section">
+            <div class="section-header-blogs">
+                <h3>Must Read</h3>
+                <a href="#" class="see-all">See all →</a>
+            </div>
+            <div class="must-read-grid">
+                <article class="must-read-main">
+                    <div class="blog-image-large">
+                        <div class="placeholder-blog-large strategy">
+                            <i class="fas fa-chess"></i>
+                        </div>
+                        <div class="blog-category">Strategy</div>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Strategic Planning: Building Competitive Advantage in Dynamic Markets</h3>
+                        <p>Learn how successful companies develop and execute strategic initiatives that create sustainable competitive advantages in rapidly changing business environments...</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">Strategy • 5 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="must-read-sidebar">
+                    <article class="sidebar-article">
+                        <div class="blog-image-small">
+                            <div class="placeholder-blog-small leadership">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-category">Leadership</div>
+                            <h4>Empowering Women Leaders: Breaking Barriers in Corporate Culture</h4>
+                            <div class="blog-meta">
+                                <span class="blog-date">Leadership • 10 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="sidebar-article">
+                        <div class="blog-image-small">
+                            <div class="placeholder-blog-small data">
+                                <i class="fas fa-database"></i>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-category">Data Science</div>
+                            <h4>Data-Driven Decision Making: The Future of Business Intelligence</h4>
+                            <div class="blog-meta">
+                                <span class="blog-date">Analytics • 7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="sidebar-article">
+                        <div class="blog-image-small">
+                            <div class="placeholder-blog-small innovation">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-category">Innovation</div>
+                            <h4>Innovation Management: Fostering Creative Solutions in the Workplace</h4>
+                            <div class="blog-meta">
+                                <span class="blog-date">Innovation • 4 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor's Pick Section -->
+        <div class="blogs-section">
+            <div class="section-header-blogs">
+                <h3>Editor's Pick</h3>
+                <a href="#" class="see-all">See all →</a>
+            </div>
+            
+            <article class="editors-pick-main">
+                <div class="blog-image-hero">
+                    <div class="placeholder-blog-hero tech">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="blog-category">Technology</div>
+                </div>
+                <div class="blog-content">
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="author-name">Jackson • 12 min read</span>
+                    </div>
+                    <h2>Digital Transformation: Preparing Your Organization for the Future</h2>
+                    <p>A comprehensive guide to implementing digital transformation strategies that modernize operations, enhance customer experience, and drive sustainable growth in today's competitive landscape.</p>
+                </div>
+            </article>
+
+            <div class="editors-pick-grid">
+                <article class="pick-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog remote">
+                            <i class="fas fa-laptop-house"></i>
+                        </div>
+                        <div class="blog-category remote">Remote Work</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Remote Work Best Practices: Building Effective Distributed Teams</h4>
+                        <div class="blog-meta">
+                            <span class="blog-date">Workplace • 6 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="pick-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog ai">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="blog-category ai">AI & Automation</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>AI in Recruitment: Transforming How Companies Find Top Talent</h4>
+                        <div class="blog-meta">
+                            <span class="blog-date">HR Technology • 8 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="pick-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog social">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="blog-category social">Social Media</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Social Media Strategy: Building Brand Authority in Digital Spaces</h4>
+                        <div class="blog-meta">
+                            <span class="blog-date">Marketing • 5 min read</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="pick-card">
+                    <div class="blog-image">
+                        <div class="placeholder-blog knowledge">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="blog-category knowledge">Knowledge Management</div>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Building Organizational Knowledge: Documentation and Process Management</h4>
+                        <div class="blog-meta">
+                            <span class="blog-date">Operations • 12 min read</span>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     `;
