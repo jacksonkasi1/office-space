@@ -982,8 +982,8 @@ function renderBlogsContent(container) {
                     <h2>Craft narratives <span class="highlight">that ignite</span> <span class="highlight-blue">inspiration</span>, <span class="highlight-green">knowledge</span>, and <span class="highlight-orange">entertainment</span></h2>
                 </div>
                 <div class="hero-image">
-                    <div class="placeholder-hero">
-                        <i class="fas fa-newspaper"></i>
+                    <div class="hero-image-container">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=240&fit=crop&crop=center" alt="Team meeting and project management" class="hero-img">
                         <div class="hero-badge">FEATURED</div>
                     </div>
                     <div class="hero-article-info">
@@ -1013,9 +1013,7 @@ function renderBlogsContent(container) {
             <div class="blogs-grid">
                 <article class="blog-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog tech">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=160&fit=crop&crop=center" alt="Software development" class="blog-img">
                         <div class="blog-category">Technology</div>
                     </div>
                     <div class="blog-content">
@@ -1029,10 +1027,8 @@ function renderBlogsContent(container) {
 
                 <article class="blog-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog sports">
-                            <i class="fas fa-futbol"></i>
-                        </div>
-                        <div class="blog-category">Sports</div>
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=160&fit=crop&crop=center" alt="Team leadership" class="blog-img">
+                        <div class="blog-category">Leadership</div>
                     </div>
                     <div class="blog-content">
                         <h4>Team Leadership Strategies for Competitive Success</h4>
@@ -1045,9 +1041,7 @@ function renderBlogsContent(container) {
 
                 <article class="blog-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog business">
-                            <i class="fas fa-handshake"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=160&fit=crop&crop=center" alt="Business partnership" class="blog-img">
                         <div class="blog-category">Business</div>
                     </div>
                     <div class="blog-content">
@@ -1061,9 +1055,7 @@ function renderBlogsContent(container) {
 
                 <article class="blog-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog finance">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=160&fit=crop&crop=center" alt="Financial planning" class="blog-img">
                         <div class="blog-category">Finance</div>
                     </div>
                     <div class="blog-content">
@@ -1086,9 +1078,7 @@ function renderBlogsContent(container) {
             <div class="must-read-grid">
                 <article class="must-read-main">
                     <div class="blog-image-large">
-                        <div class="placeholder-blog-large strategy">
-                            <i class="fas fa-chess"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=240&fit=crop&crop=center" alt="Strategic planning" class="blog-img-large">
                         <div class="blog-category">Strategy</div>
                     </div>
                     <div class="blog-content">
@@ -1103,9 +1093,7 @@ function renderBlogsContent(container) {
                 <div class="must-read-sidebar">
                     <article class="sidebar-article">
                         <div class="blog-image-small">
-                            <div class="placeholder-blog-small leadership">
-                                <i class="fas fa-users"></i>
-                            </div>
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=60&fit=crop&crop=center" alt="Women leadership" class="blog-img-small">
                         </div>
                         <div class="blog-content">
                             <div class="blog-category">Leadership</div>
@@ -1118,9 +1106,7 @@ function renderBlogsContent(container) {
 
                     <article class="sidebar-article">
                         <div class="blog-image-small">
-                            <div class="placeholder-blog-small data">
-                                <i class="fas fa-database"></i>
-                            </div>
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&h=60&fit=crop&crop=center" alt="Data analytics" class="blog-img-small">
                         </div>
                         <div class="blog-content">
                             <div class="blog-category">Data Science</div>
@@ -1133,9 +1119,7 @@ function renderBlogsContent(container) {
 
                     <article class="sidebar-article">
                         <div class="blog-image-small">
-                            <div class="placeholder-blog-small innovation">
-                                <i class="fas fa-lightbulb"></i>
-                            </div>
+                            <img src="https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=80&h=60&fit=crop&crop=center" alt="Innovation and creativity" class="blog-img-small">
                         </div>
                         <div class="blog-content">
                             <div class="blog-category">Innovation</div>
@@ -1158,9 +1142,7 @@ function renderBlogsContent(container) {
             
             <article class="editors-pick-main">
                 <div class="blog-image-hero">
-                    <div class="placeholder-blog-hero tech">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=320&fit=crop&crop=center" alt="Digital transformation" class="blog-img-hero">
                     <div class="blog-category">Technology</div>
                 </div>
                 <div class="blog-content">
@@ -1178,9 +1160,7 @@ function renderBlogsContent(container) {
             <div class="editors-pick-grid">
                 <article class="pick-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog remote">
-                            <i class="fas fa-laptop-house"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=120&fit=crop&crop=center" alt="Remote work setup" class="blog-img">
                         <div class="blog-category remote">Remote Work</div>
                     </div>
                     <div class="blog-content">
@@ -1193,9 +1173,7 @@ function renderBlogsContent(container) {
 
                 <article class="pick-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog ai">
-                            <i class="fas fa-robot"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=120&fit=crop&crop=center" alt="AI and technology" class="blog-img">
                         <div class="blog-category ai">AI & Automation</div>
                     </div>
                     <div class="blog-content">
@@ -1208,9 +1186,7 @@ function renderBlogsContent(container) {
 
                 <article class="pick-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog social">
-                            <i class="fas fa-share-alt"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=120&fit=crop&crop=center" alt="Social media marketing" class="blog-img">
                         <div class="blog-category social">Social Media</div>
                     </div>
                     <div class="blog-content">
@@ -1223,9 +1199,7 @@ function renderBlogsContent(container) {
 
                 <article class="pick-card">
                     <div class="blog-image">
-                        <div class="placeholder-blog knowledge">
-                            <i class="fas fa-book-open"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=120&fit=crop&crop=center" alt="Knowledge management" class="blog-img">
                         <div class="blog-category knowledge">Knowledge Management</div>
                     </div>
                     <div class="blog-content">
