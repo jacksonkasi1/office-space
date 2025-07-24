@@ -102,6 +102,7 @@ function handleNavigation(page) {
 function updateMainContent(page) {
     const greeting = document.querySelector('.greeting');
     const dashboardContent = document.querySelector('.dashboard-content');
+    const tabNavigation = document.querySelector('.tab-navigation');
     
     // Save the original content
     if (!window.originalContent) {
@@ -115,6 +116,7 @@ function updateMainContent(page) {
         case 'home':
             greeting.innerHTML = window.originalContent.greeting;
             dashboardContent.innerHTML = window.originalContent.dashboard;
+            tabNavigation.style.display = 'flex';
             // Re-initialize components after content change
             setTimeout(() => {
                 initializeCollapsibleSections();
@@ -124,6 +126,7 @@ function updateMainContent(page) {
             
         case 'prodify':
             greeting.innerHTML = 'Prodify AI <span class="greeting-question">Your AI-powered productivity assistant</span>';
+            tabNavigation.style.display = 'none';
             dashboardContent.innerHTML = `
                 <div class="dashboard-row">
                     <section class="ai-section">
@@ -146,6 +149,7 @@ function updateMainContent(page) {
             
         case 'tasks':
             greeting.innerHTML = 'My Tasks <span class="greeting-question">Stay organized and productive</span>';
+            tabNavigation.style.display = 'none';
             dashboardContent.innerHTML = `
                 <div class="dashboard-row">
                     <section class="tasks-section">
@@ -178,6 +182,7 @@ function updateMainContent(page) {
             
         case 'inbox':
             greeting.innerHTML = 'Inbox <span class="greeting-question">Your messages and notifications</span>';
+            tabNavigation.style.display = 'none';
             dashboardContent.innerHTML = `
                 <div class="dashboard-row">
                     <section class="inbox-section">
@@ -214,6 +219,7 @@ function updateMainContent(page) {
             
         case 'calendar':
             greeting.innerHTML = 'Calendar <span class="greeting-question">Manage your schedule</span>';
+            tabNavigation.style.display = 'none';
             dashboardContent.innerHTML = window.originalContent.dashboard;
             setTimeout(() => {
                 initializeCalendar();
@@ -222,6 +228,7 @@ function updateMainContent(page) {
             
         case 'team-chat':
             greeting.innerHTML = 'Team Chat <span class="greeting-question">Collaborate with your team</span>';
+            tabNavigation.style.display = 'none';
             dashboardContent.innerHTML = `
                 <div class="dashboard-row">
                     <section class="chat-section">
