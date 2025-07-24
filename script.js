@@ -150,34 +150,7 @@ function updateMainContent(page) {
         case 'tasks':
             greeting.innerHTML = 'My Tasks <span class="greeting-question">Stay organized and productive</span>';
             tabNavigation.style.display = 'none';
-            dashboardContent.innerHTML = `
-                <div class="dashboard-row">
-                    <section class="tasks-section">
-                        <div class="section-header">
-                            <i class="fas fa-tasks"></i>
-                            <h3>Today's Tasks</h3>
-                            <button class="add-btn"><i class="fas fa-plus"></i> Add Task</button>
-                        </div>
-                        <div class="task-list">
-                            <div class="task-item">
-                                <input type="checkbox" id="task1">
-                                <label for="task1">Review quarterly reports</label>
-                                <span class="task-priority high">High</span>
-                            </div>
-                            <div class="task-item">
-                                <input type="checkbox" id="task2">
-                                <label for="task2">Team standup meeting</label>
-                                <span class="task-priority medium">Medium</span>
-                            </div>
-                            <div class="task-item completed">
-                                <input type="checkbox" id="task3" checked>
-                                <label for="task3">Update project documentation</label>
-                                <span class="task-priority low">Low</span>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            `;
+            renderKanbanBoard(dashboardContent);
             break;
             
         case 'inbox':
@@ -311,6 +284,303 @@ function renderHomeContent(container) {
         initializeCalendar();
         initializeProjectActions();
     }, 50);
+}
+
+function renderKanbanBoard(container) {
+    container.innerHTML = `
+        <!-- Kanban Board Header -->
+        <div class="kanban-header">
+            <div class="kanban-title">
+                <h2>Project Board</h2>
+                <span class="project-category">Development Team</span>
+            </div>
+            <div class="kanban-controls">
+                <button class="kanban-btn add-task-btn" onclick="openTaskModal()">
+                    <i class="fas fa-plus"></i>
+                    Add task
+                </button>
+                <div class="kanban-options">
+                    <button class="kanban-btn filter-btn">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                    <button class="kanban-btn sort-btn">
+                        <i class="fas fa-sort"></i>
+                        Sort
+                    </button>
+                    <button class="kanban-btn view-btn">
+                        <i class="fas fa-eye"></i>
+                        View
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-board">
+            <!-- Not Ready Column -->
+            <div class="kanban-column" data-status="not-ready">
+                <div class="column-header">
+                    <h3>Not Ready</h3>
+                    <div class="column-actions">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="column-content" id="not-ready-tasks">
+                    <div class="task-card" draggable="true" data-task-id="1">
+                        <div class="task-image">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=120&fit=crop&crop=center" alt="Dashboard design">
+                        </div>
+                        <div class="task-content">
+                            <h4>Design system implementation</h4>
+                            <div class="task-labels">
+                                <span class="task-label design">Design</span>
+                                <span class="task-label frontend">Frontend</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 3</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 1</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">JS</div>
+                                <div class="assignee-avatar">MK</div>
+                                <div class="assignee-avatar">AL</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card" draggable="true" data-task-id="2">
+                        <div class="task-content">
+                            <h4>Database schema optimization</h4>
+                            <div class="task-labels">
+                                <span class="task-label backend">Backend</span>
+                                <span class="task-label database">Database</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 3</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 1</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">TM</div>
+                                <div class="assignee-avatar">RJ</div>
+                                <div class="assignee-avatar">SK</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-task-placeholder" onclick="openTaskModal('not-ready')">
+                        <i class="fas fa-plus"></i>
+                        <span>Add task</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- To Do Column -->
+            <div class="kanban-column" data-status="todo">
+                <div class="column-header">
+                    <h3>To Do</h3>
+                    <div class="column-actions">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="column-content" id="todo-tasks">
+                    <div class="task-card" draggable="true" data-task-id="3">
+                        <div class="task-content">
+                            <h4>API endpoint documentation</h4>
+                            <div class="task-labels">
+                                <span class="task-label api">API</span>
+                                <span class="task-label docs">Documentation</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 3</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 2</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">CL</div>
+                                <div class="assignee-avatar">NK</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card" draggable="true" data-task-id="4">
+                        <div class="task-image">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=120&fit=crop&crop=center" alt="Analytics dashboard">
+                        </div>
+                        <div class="task-content">
+                            <h4>User analytics integration</h4>
+                            <div class="task-labels">
+                                <span class="task-label analytics">Analytics</span>
+                                <span class="task-label integration">Integration</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 2</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 2</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">DM</div>
+                                <div class="assignee-avatar">PL</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-task-placeholder" onclick="openTaskModal('todo')">
+                        <i class="fas fa-plus"></i>
+                        <span>Add task</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="kanban-column" data-status="in-progress">
+                <div class="column-header">
+                    <h3>In Progress</h3>
+                    <div class="column-actions">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="column-content" id="in-progress-tasks">
+                    <div class="task-card" draggable="true" data-task-id="5">
+                        <div class="task-content">
+                            <h4>Authentication system refactor</h4>
+                            <div class="task-labels">
+                                <span class="task-label security">Security</span>
+                                <span class="task-label refactor">Refactor</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 3</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 1</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">MT</div>
+                                <div class="assignee-avatar">JS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card" draggable="true" data-task-id="6">
+                        <div class="task-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=300&h=120&fit=crop&crop=center" alt="Team collaboration">
+                        </div>
+                        <div class="task-content">
+                            <h4>Team collaboration features</h4>
+                            <div class="task-labels">
+                                <span class="task-label collaboration">Collaboration</span>
+                                <span class="task-label feature">Feature</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 2</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 2</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">AR</div>
+                                <div class="assignee-avatar">TK</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-task-placeholder" onclick="openTaskModal('in-progress')">
+                        <i class="fas fa-plus"></i>
+                        <span>Add task</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Review Column -->
+            <div class="kanban-column" data-status="in-review">
+                <div class="column-header">
+                    <h3>In Review</h3>
+                    <div class="column-actions">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="column-content" id="in-review-tasks">
+                    <div class="task-card" draggable="true" data-task-id="7">
+                        <div class="task-image">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=120&fit=crop&crop=center" alt="Code review">
+                        </div>
+                        <div class="task-content">
+                            <h4>Performance optimization review</h4>
+                            <div class="task-labels">
+                                <span class="task-label performance">Performance</span>
+                                <span class="task-label review">Review</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 3</span>
+                                <span class="task-stat"><i class="fas fa-comment"></i> 1</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">KS</div>
+                                <div class="assignee-avatar">ML</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-card" draggable="true" data-task-id="8">
+                        <div class="task-content">
+                            <h4>Mobile responsive updates</h4>
+                            <div class="task-labels">
+                                <span class="task-label mobile">Mobile</span>
+                                <span class="task-label responsive">Responsive</span>
+                            </div>
+                            <div class="task-stats">
+                                <span class="task-stat"><i class="fas fa-paperclip"></i> 2</span>
+                            </div>
+                            <div class="task-assignees">
+                                <div class="assignee-avatar">VB</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-task-placeholder" onclick="openTaskModal('in-review')">
+                        <i class="fas fa-plus"></i>
+                        <span>Add task</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Modal -->
+        <div class="task-modal" id="taskModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Task</h3>
+                    <button class="close-modal" onclick="closeTaskModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="taskForm">
+                        <div class="form-group">
+                            <label>Task Title</label>
+                            <input type="text" id="taskTitle" placeholder="Enter task title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Labels</label>
+                            <div class="label-input">
+                                <input type="text" id="labelInput" placeholder="Add label">
+                                <button type="button" onclick="addLabel()">Add</button>
+                            </div>
+                            <div class="selected-labels" id="selectedLabels"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Assignees</label>
+                            <div class="assignee-input">
+                                <input type="text" id="assigneeInput" placeholder="Assignee initials" maxlength="2">
+                                <button type="button" onclick="addAssignee()">Add</button>
+                            </div>
+                            <div class="selected-assignees" id="selectedAssignees"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" onclick="closeTaskModal()">Cancel</button>
+                            <button type="submit">Create Task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>`;
+    
+    // Initialize Kanban functionality
+    initializeKanbanBoard();
 }
 
 function renderTasksContent(container) {
@@ -613,6 +883,263 @@ function renderTasksContent(container) {
     
     // Initialize task functionality
     initializeTasksFeatures();
+}
+
+// Kanban Board Functions
+function initializeKanbanBoard() {
+    // Initialize drag and drop
+    initializeDragAndDrop();
+    
+    // Initialize modal form
+    initializeTaskModal();
+}
+
+function initializeDragAndDrop() {
+    const taskCards = document.querySelectorAll('.task-card');
+    const columns = document.querySelectorAll('.column-content');
+    
+    taskCards.forEach(card => {
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragend', handleDragEnd);
+    });
+    
+    columns.forEach(column => {
+        column.addEventListener('dragover', handleDragOver);
+        column.addEventListener('drop', handleDrop);
+        column.addEventListener('dragenter', handleDragEnter);
+        column.addEventListener('dragleave', handleDragLeave);
+    });
+}
+
+let draggedElement = null;
+
+function handleDragStart(e) {
+    draggedElement = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd(e) {
+    this.classList.remove('dragging');
+    draggedElement = null;
+    
+    // Remove drag over effects from all columns
+    document.querySelectorAll('.column-content').forEach(col => {
+        col.classList.remove('drag-over');
+    });
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDragEnter(e) {
+    this.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    if (!this.contains(e.relatedTarget)) {
+        this.classList.remove('drag-over');
+    }
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
+    
+    if (draggedElement && this !== draggedElement.parentNode) {
+        // Find the add task placeholder and insert before it
+        const addPlaceholder = this.querySelector('.add-task-placeholder');
+        if (addPlaceholder) {
+            this.insertBefore(draggedElement, addPlaceholder);
+        } else {
+            this.appendChild(draggedElement);
+        }
+        
+        // Update task status based on column
+        const newStatus = this.parentNode.getAttribute('data-status');
+        draggedElement.setAttribute('data-status', newStatus);
+    }
+}
+
+// Task Modal Functions
+let currentColumn = null;
+let taskLabels = [];
+let taskAssignees = [];
+
+function openTaskModal(columnStatus = null) {
+    currentColumn = columnStatus;
+    taskLabels = [];
+    taskAssignees = [];
+    
+    const modal = document.getElementById('taskModal');
+    modal.style.display = 'flex';
+    
+    // Clear form
+    document.getElementById('taskTitle').value = '';
+    document.getElementById('labelInput').value = '';
+    document.getElementById('assigneeInput').value = '';
+    document.getElementById('selectedLabels').innerHTML = '';
+    document.getElementById('selectedAssignees').innerHTML = '';
+    
+    // Focus on title input
+    setTimeout(() => {
+        document.getElementById('taskTitle').focus();
+    }, 100);
+}
+
+function closeTaskModal() {
+    const modal = document.getElementById('taskModal');
+    modal.style.display = 'none';
+}
+
+function addLabel() {
+    const labelInput = document.getElementById('labelInput');
+    const labelText = labelInput.value.trim();
+    
+    if (labelText && !taskLabels.includes(labelText)) {
+        taskLabels.push(labelText);
+        updateSelectedLabels();
+        labelInput.value = '';
+    }
+}
+
+function updateSelectedLabels() {
+    const container = document.getElementById('selectedLabels');
+    container.innerHTML = '';
+    
+    taskLabels.forEach((label, index) => {
+        const labelElement = document.createElement('div');
+        labelElement.className = 'selected-label';
+        labelElement.innerHTML = `
+            <span>${label}</span>
+            <button type="button" onclick="removeLabel(${index})">×</button>
+        `;
+        container.appendChild(labelElement);
+    });
+}
+
+function removeLabel(index) {
+    taskLabels.splice(index, 1);
+    updateSelectedLabels();
+}
+
+function addAssignee() {
+    const assigneeInput = document.getElementById('assigneeInput');
+    const assigneeText = assigneeInput.value.trim().toUpperCase();
+    
+    if (assigneeText && assigneeText.length <= 2 && !taskAssignees.includes(assigneeText)) {
+        taskAssignees.push(assigneeText);
+        updateSelectedAssignees();
+        assigneeInput.value = '';
+    }
+}
+
+function updateSelectedAssignees() {
+    const container = document.getElementById('selectedAssignees');
+    container.innerHTML = '';
+    
+    taskAssignees.forEach((assignee, index) => {
+        const assigneeElement = document.createElement('div');
+        assigneeElement.className = 'selected-assignee';
+        assigneeElement.innerHTML = `
+            <div class="assignee-avatar">${assignee}</div>
+            <button type="button" onclick="removeAssignee(${index})">×</button>
+        `;
+        container.appendChild(assigneeElement);
+    });
+}
+
+function removeAssignee(index) {
+    taskAssignees.splice(index, 1);
+    updateSelectedAssignees();
+}
+
+function initializeTaskModal() {
+    const form = document.getElementById('taskForm');
+    form.addEventListener('submit', handleTaskSubmit);
+    
+    // Close modal when clicking outside
+    document.getElementById('taskModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeTaskModal();
+        }
+    });
+    
+    // Handle Enter key in inputs
+    document.getElementById('labelInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addLabel();
+        }
+    });
+    
+    document.getElementById('assigneeInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addAssignee();
+        }
+    });
+}
+
+function handleTaskSubmit(e) {
+    e.preventDefault();
+    
+    const title = document.getElementById('taskTitle').value.trim();
+    if (!title) return;
+    
+    // Create new task card
+    const taskId = Date.now();
+    const taskCard = createTaskCard(taskId, title, taskLabels, taskAssignees);
+    
+    // Add to appropriate column
+    const targetColumn = currentColumn ? 
+        document.getElementById(`${currentColumn}-tasks`) : 
+        document.getElementById('not-ready-tasks');
+    
+    const addPlaceholder = targetColumn.querySelector('.add-task-placeholder');
+    targetColumn.insertBefore(taskCard, addPlaceholder);
+    
+    // Re-initialize drag and drop for new card
+    taskCard.addEventListener('dragstart', handleDragStart);
+    taskCard.addEventListener('dragend', handleDragEnd);
+    
+    // Close modal
+    closeTaskModal();
+}
+
+function createTaskCard(id, title, labels, assignees) {
+    const taskCard = document.createElement('div');
+    taskCard.className = 'task-card';
+    taskCard.draggable = true;
+    taskCard.setAttribute('data-task-id', id);
+    
+    const labelsHtml = labels.map(label => 
+        `<span class="task-label ${label.toLowerCase()}">${label}</span>`
+    ).join('');
+    
+    const assigneesHtml = assignees.map(assignee => 
+        `<div class="assignee-avatar">${assignee}</div>`
+    ).join('');
+    
+    taskCard.innerHTML = `
+        <div class="task-content">
+            <h4>${title}</h4>
+            <div class="task-labels">
+                ${labelsHtml}
+            </div>
+            <div class="task-stats">
+                <span class="task-stat"><i class="fas fa-paperclip"></i> 0</span>
+                <span class="task-stat"><i class="fas fa-comment"></i> 0</span>
+            </div>
+            <div class="task-assignees">
+                ${assigneesHtml}
+            </div>
+        </div>
+    `;
+    
+    return taskCard;
 }
 
 function renderResourcesContent(container) {
