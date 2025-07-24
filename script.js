@@ -124,27 +124,10 @@ function updateMainContent(page) {
             }, 100);
             break;
             
-        case 'prodify':
-            greeting.innerHTML = 'Prodify AI <span class="greeting-question">Your AI-powered productivity assistant</span>';
+        case 'daisy':
+            greeting.innerHTML = 'Daisy AI <span class="greeting-question">Your intelligent productivity companion</span>';
             tabNavigation.style.display = 'none';
-            dashboardContent.innerHTML = `
-                <div class="dashboard-row">
-                    <section class="ai-section">
-                        <div class="section-header">
-                            <i class="fas fa-robot"></i>
-                            <h3>AI Assistant</h3>
-                        </div>
-                        <div class="ai-content">
-                            <p>Ask me anything to boost your productivity!</p>
-                            <div class="ai-suggestions">
-                                <button class="suggestion-btn">Schedule a meeting</button>
-                                <button class="suggestion-btn">Create task list</button>
-                                <button class="suggestion-btn">Analyze project status</button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            `;
+            renderDaisyAI(dashboardContent);
             break;
             
         case 'tasks':
@@ -284,6 +267,210 @@ function renderHomeContent(container) {
         initializeCalendar();
         initializeProjectActions();
     }, 50);
+}
+
+function renderDaisyAI(container) {
+    container.innerHTML = `
+        <!-- Daisy AI Main Layout -->
+        <div class="daisy-ai-layout">
+            <!-- Left Column: Chat Interface -->
+            <div class="daisy-left-column">
+                <!-- Chat Header -->
+                <div class="daisy-chat-header">
+                    <div class="daisy-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="daisy-info">
+                        <h3>Daisy AI</h3>
+                        <span class="daisy-status">Online • Ready to assist</span>
+                    </div>
+                    <div class="daisy-actions">
+                        <button class="daisy-action-btn" title="Voice Chat">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="daisy-action-btn" title="Clear Chat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="daisy-chat-container">
+                    <div class="daisy-message daisy-bot">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <p>Hello! I'm Daisy, your AI productivity assistant. I can help you with:</p>
+                                <ul>
+                                    <li>📝 Creating and managing tasks</li>
+                                    <li>📅 Scheduling meetings and events</li>
+                                    <li>📊 Analyzing project progress</li>
+                                    <li>💡 Providing productivity insights</li>
+                                    <li>🔍 Finding documents and resources</li>
+                                </ul>
+                                <p>How can I assist you today?</p>
+                            </div>
+                            <span class="message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="daisy-quick-actions">
+                    <button class="quick-action-card" onclick="handleDaisyQuickAction('schedule')">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Schedule Meeting</span>
+                    </button>
+                    <button class="quick-action-card" onclick="handleDaisyQuickAction('tasks')">
+                        <i class="fas fa-tasks"></i>
+                        <span>Create Task List</span>
+                    </button>
+                    <button class="quick-action-card" onclick="handleDaisyQuickAction('analyze')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analyze Progress</span>
+                    </button>
+                    <button class="quick-action-card" onclick="handleDaisyQuickAction('insights')">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Get Insights</span>
+                    </button>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="daisy-chat-input">
+                    <div class="input-container">
+                        <input type="text" id="daisyInput" placeholder="Ask Daisy anything..." />
+                        <button class="input-action-btn" onclick="attachFile()">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="input-action-btn" onclick="toggleVoice()">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="send-btn" onclick="sendDaisyMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: AI Insights & Features -->
+            <div class="daisy-right-column">
+                <!-- AI Insights Widget -->
+                <div class="daisy-insights-card">
+                    <div class="insights-header">
+                        <i class="fas fa-brain"></i>
+                        <h4>AI Insights</h4>
+                        <span class="insights-badge">Live</span>
+                    </div>
+                    <div class="insights-content">
+                        <div class="insight-item">
+                            <div class="insight-icon productivity">
+                                <i class="fas fa-trending-up"></i>
+                            </div>
+                            <div class="insight-info">
+                                <h5>Productivity Boost</h5>
+                                <p>You're 23% more productive this week! Your focus time has increased.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon schedule">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="insight-info">
+                                <h5>Optimal Schedule</h5>
+                                <p>Best time for deep work: 9-11 AM. Consider blocking this time.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon tasks">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="insight-info">
+                                <h5>Task Pattern</h5>
+                                <p>You complete 40% more tasks on Tuesdays. Plan important work accordingly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Suggestions -->
+                <div class="daisy-suggestions-card">
+                    <div class="suggestions-header">
+                        <i class="fas fa-magic"></i>
+                        <h4>Smart Suggestions</h4>
+                    </div>
+                    <div class="suggestions-list">
+                        <div class="suggestion-item">
+                            <div class="suggestion-type">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email</span>
+                            </div>
+                            <p>Draft follow-up email for yesterday's client meeting</p>
+                            <button class="suggestion-btn">Apply</button>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-type">
+                                <i class="fas fa-calendar"></i>
+                                <span>Calendar</span>
+                            </div>
+                            <p>Block 2 hours tomorrow for the quarterly report</p>
+                            <button class="suggestion-btn">Schedule</button>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-type">
+                                <i class="fas fa-users"></i>
+                                <span>Team</span>
+                            </div>
+                            <p>Schedule team sync - it's been 5 days since last meeting</p>
+                            <button class="suggestion-btn">Create</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="daisy-activity-card">
+                    <div class="activity-header">
+                        <i class="fas fa-history"></i>
+                        <h4>Recent AI Actions</h4>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-time">2 min ago</div>
+                            <div class="activity-desc">
+                                <i class="fas fa-tasks"></i>
+                                <span>Created 3 tasks from meeting notes</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">15 min ago</div>
+                            <div class="activity-desc">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Generated weekly productivity report</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">1 hour ago</div>
+                            <div class="activity-desc">
+                                <i class="fas fa-calendar-plus"></i>
+                                <span>Scheduled team meeting for next week</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-time">2 hours ago</div>
+                            <div class="activity-desc">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Provided optimization suggestions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Initialize Daisy AI functionality
+    initializeDaisyAI();
 }
 
 function renderKanbanBoard(container) {
@@ -2287,6 +2474,179 @@ function handleQuickAction(action) {
             }
             break;
     }
+}
+
+// Daisy AI Functions
+function initializeDaisyAI() {
+    // Initialize chat input
+    const daisyInput = document.getElementById('daisyInput');
+    if (daisyInput) {
+        daisyInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendDaisyMessage();
+            }
+        });
+    }
+    
+    // Initialize suggestion buttons
+    const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+    suggestionBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const suggestion = this.parentElement.querySelector('p').textContent;
+            applySuggestion(suggestion);
+        });
+    });
+    
+    // Initialize clear chat
+    const clearBtn = document.querySelector('.daisy-action-btn[title="Clear Chat"]');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', clearDaisyChat);
+    }
+    
+    // Auto-scroll chat to bottom
+    setTimeout(() => {
+        const chatContainer = document.querySelector('.daisy-chat-container');
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    }, 100);
+}
+
+function sendDaisyMessage() {
+    const input = document.getElementById('daisyInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Add user message
+    addDaisyMessage(message, 'user');
+    input.value = '';
+    
+    // Simulate AI response
+    setTimeout(() => {
+        const response = generateDaisyResponse(message);
+        addDaisyMessage(response, 'bot');
+    }, 1500);
+}
+
+function addDaisyMessage(content, sender) {
+    const chatContainer = document.querySelector('.daisy-chat-container');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `daisy-message daisy-${sender}`;
+    
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    if (sender === 'bot') {
+        messageDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    <p>${content}</p>
+                </div>
+                <span class="message-time">${time}</span>
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <div class="message-bubble">
+                    <p>${content}</p>
+                </div>
+                <span class="message-time">${time}</span>
+            </div>
+            <div class="message-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+        `;
+    }
+    
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function generateDaisyResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+    
+    if (message.includes('task') || message.includes('todo')) {
+        return "I can help you create and manage tasks! Would you like me to add this to your Kanban board or create a structured task list? I can also set priorities and due dates.";
+    } else if (message.includes('meeting') || message.includes('schedule')) {
+        return "I'll help you schedule that meeting! I can suggest optimal times based on your calendar, send invites to participants, and even prepare an agenda. What type of meeting are you planning?";
+    } else if (message.includes('report') || message.includes('analysis')) {
+        return "I can generate detailed reports and analytics for you! I have access to your productivity data, project progress, and team performance metrics. What specific insights would you like to see?";
+    } else if (message.includes('help') || message.includes('what can you do')) {
+        return "I'm here to boost your productivity! I can help with task management, meeting scheduling, document creation, data analysis, team coordination, and much more. Try asking me to create a task, schedule a meeting, or analyze your weekly progress!";
+    } else if (message.includes('time') || message.includes('productivity')) {
+        return "Based on your activity patterns, I've noticed you're most productive between 9-11 AM. I recommend blocking this time for your most important work. Would you like me to analyze your weekly productivity trends?";
+    } else {
+        return "That's an interesting question! I'm continuously learning to better assist you. While I process your request, you can try using the quick action buttons below or ask me about tasks, meetings, or productivity insights.";
+    }
+}
+
+function handleDaisyQuickAction(action) {
+    const responses = {
+        'schedule': "Let me help you schedule a meeting! I'll check your calendar for optimal times. What's the meeting about and who should attend?",
+        'tasks': "I'll create a task list for you! What project or area would you like to focus on? I can organize tasks by priority, deadline, or category.",
+        'analyze': "Let me analyze your current progress! I can see you've completed 73% of your weekly goals and your team productivity is up 15% this month. Would you like a detailed breakdown?",
+        'insights': "Here are your latest productivity insights: You're most focused on Tuesday mornings, respond to emails fastest on Wednesdays, and complete creative tasks best in the afternoon. Need specific recommendations?"
+    };
+    
+    addDaisyMessage(responses[action], 'bot');
+}
+
+function applySuggestion(suggestion) {
+    addDaisyMessage(`Applied suggestion: "${suggestion}". I'll take care of that for you right away!`, 'bot');
+    
+    // Add to recent activity
+    setTimeout(() => {
+        addRecentActivity(suggestion);
+    }, 1000);
+}
+
+function addRecentActivity(action) {
+    const activityList = document.querySelector('.activity-list');
+    const newActivity = document.createElement('div');
+    newActivity.className = 'activity-item';
+    newActivity.innerHTML = `
+        <div class="activity-time">Just now</div>
+        <div class="activity-desc">
+            <i class="fas fa-check"></i>
+            <span>${action}</span>
+        </div>
+    `;
+    
+    activityList.insertBefore(newActivity, activityList.firstChild);
+    
+    // Remove oldest activity if more than 5
+    if (activityList.children.length > 5) {
+        activityList.removeChild(activityList.lastChild);
+    }
+}
+
+function clearDaisyChat() {
+    const chatContainer = document.querySelector('.daisy-chat-container');
+    chatContainer.innerHTML = `
+        <div class="daisy-message daisy-bot">
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    <p>Chat cleared! I'm ready to help you with anything you need. How can I assist you today?</p>
+                </div>
+                <span class="message-time">Just now</span>
+            </div>
+        </div>
+    `;
+}
+
+function attachFile() {
+    addDaisyMessage("File attachment feature coming soon! For now, you can describe what you'd like to work on and I'll help you organize it.", 'bot');
+}
+
+function toggleVoice() {
+    addDaisyMessage("Voice chat feature is being prepared! I'll be able to listen and respond with voice soon. For now, let's continue with text chat!", 'bot');
 }
 
 // Utility Functions
