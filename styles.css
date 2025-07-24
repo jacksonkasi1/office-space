@@ -1974,6 +1974,12 @@ section .section-header h3 {
     color: #6b7280;
 }
 
+/* Fix category count in Browse Categories section */
+.category-card-small .category-count {
+    color: #6b7280 !important;
+    text-shadow: none !important;
+}
+
 /* Recent Activity */
 .recent-activity {
     background: white;
