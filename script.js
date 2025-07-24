@@ -614,36 +614,358 @@ function renderTasksContent(container) {
 
 function renderResourcesContent(container) {
     container.innerHTML = `
-        <div class="dashboard-row">
-            <section class="resources-section">
-                <div class="section-header">
-                    <i class="fas fa-folder-open"></i>
-                    <h3>Resources</h3>
+        <!-- Compact Resources Header -->
+        <div class="resources-header">
+            <div class="resources-title-section">
+                <h2>RESOURCE LIBRARY</h2>
+                <div class="resources-search">
+                    <input type="text" placeholder="Search documents, templates..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-file-pdf"></i>
-                        </div>
-                        <h4>Project Documentation</h4>
-                        <p>Latest project specifications and requirements</p>
+            </div>
+            
+            <!-- Quick Categories -->
+            <div class="quick-categories">
+                <div class="category-pill documents">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Documents</span>
+                    <span class="category-count">45</span>
+                </div>
+                <div class="category-pill templates">
+                    <i class="fas fa-file-powerpoint"></i>
+                    <span>Templates</span>
+                    <span class="category-count">28</span>
+                </div>
+                <div class="category-pill forms">
+                    <i class="fas fa-wpforms"></i>
+                    <span>Forms</span>
+                    <span class="category-count">33</span>
+                </div>
+                <div class="category-pill policies">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Policies</span>
+                    <span class="category-count">19</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="resources-main-layout">
+            <!-- Left Side: Featured & Popular -->
+            <div class="resources-left">
+                <!-- Featured Resources Compact -->
+                <div class="featured-compact">
+                    <div class="section-title">
+                        <h3>Featured Resources</h3>
+                        <span class="resource-badge-new">3 NEW</span>
                     </div>
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-link"></i>
+                    
+                    <div class="featured-grid">
+                        <div class="resource-card compact">
+                            <div class="resource-thumb">
+                                <div class="placeholder-doc">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="resource-badge">NEW</div>
+                            </div>
+                            <div class="resource-compact-info">
+                                <span class="resource-category">DOCUMENT</span>
+                                <h4>Project Management Guide</h4>
+                                <div class="resource-meta">
+                                    <div class="resource-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="resource-size">2.1 MB</span>
+                                </div>
+                            </div>
                         </div>
-                        <h4>Useful Links</h4>
-                        <p>Important links and references for the project</p>
-                    </div>
-                    <div class="resource-card">
-                        <div class="resource-icon">
-                            <i class="fas fa-images"></i>
+                        
+                        <div class="resource-card compact">
+                            <div class="resource-thumb">
+                                <div class="placeholder-doc template">
+                                    <i class="fas fa-file-powerpoint"></i>
+                                </div>
+                                <div class="resource-badge popular">HOT</div>
+                            </div>
+                            <div class="resource-compact-info">
+                                <span class="resource-category">TEMPLATE</span>
+                                <h4>Presentation Templates</h4>
+                                <div class="resource-meta">
+                                    <div class="resource-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="resource-size">15.3 MB</span>
+                                </div>
+                            </div>
                         </div>
-                        <h4>Design Assets</h4>
-                        <p>Brand guidelines, images, and design resources</p>
+                        
+                        <div class="resource-card compact">
+                            <div class="resource-thumb">
+                                <div class="placeholder-doc guide">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="resource-compact-info">
+                                <span class="resource-category">HANDBOOK</span>
+                                <h4>Employee Handbook</h4>
+                                <div class="resource-meta">
+                                    <div class="resource-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="resource-size">5.8 MB</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+
+                <!-- Popular Downloads -->
+                <div class="popular-downloads">
+                    <div class="section-title">
+                        <h3>Popular Downloads</h3>
+                        <button class="view-all-link">View All</button>
+                    </div>
+                    
+                    <div class="download-list">
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Meeting Templates Pack</span>
+                                <span class="download-stats">2.5 MB • 1.2k downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Budget Tracker Template</span>
+                                <span class="download-stats">1.2 MB • 856 downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Report Template</span>
+                                <span class="download-stats">0.8 MB • 743 downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-powerpoint"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Onboarding Presentation</span>
+                                <span class="download-stats">15.3 MB • 622 downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Company Policy Guide</span>
+                                <span class="download-stats">3.1 MB • 445 downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="download-item">
+                            <div class="download-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="download-info">
+                                <span class="download-name">Development Guidelines</span>
+                                <span class="download-stats">2.7 MB • 388 downloads</span>
+                            </div>
+                            <button class="download-btn-small">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Categories & Recent -->
+            <div class="resources-right">
+                <!-- Category Showcase -->
+                <div class="category-showcase-compact">
+                    <div class="section-title">
+                        <h3>Browse Categories</h3>
+                    </div>
+                    
+                    <div class="category-cards-grid">
+                        <div class="category-card-small policy">
+                            <div class="category-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Policies & Procedures</span>
+                                <span class="category-count">45 documents</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card-small training">
+                            <div class="category-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Training Materials</span>
+                                <span class="category-count">28 resources</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card-small guidelines">
+                            <div class="category-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Guidelines & SOPs</span>
+                                <span class="category-count">33 guides</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card-small templates">
+                            <div class="category-icon">
+                                <i class="fas fa-file-powerpoint"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Templates & Forms</span>
+                                <span class="category-count">56 files</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card-small reports">
+                            <div class="category-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Reports & Analytics</span>
+                                <span class="category-count">22 reports</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-card-small resources">
+                            <div class="category-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="category-info">
+                                <span class="category-name">Learning Resources</span>
+                                <span class="category-count">41 materials</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <div class="section-title">
+                        <h3>Recent Activity</h3>
+                        <span class="activity-indicator">Live</span>
+                    </div>
+                    
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-text"><strong>Sarah Johnson</strong> downloaded <em>Budget Template</em></span>
+                                <span class="activity-time">2 minutes ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-text"><strong>Mike Chen</strong> added new <em>Training Material</em></span>
+                                <span class="activity-time">15 minutes ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-text"><strong>Emma Davis</strong> updated <em>Policy Document</em></span>
+                                <span class="activity-time">1 hour ago</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="activity-info">
+                                <span class="activity-text"><strong>Alex Kim</strong> shared <em>Presentation Template</em></span>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">2,847</span>
+                            <span class="stat-label">Total Downloads</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">225</span>
+                            <span class="stat-label">Available Files</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
 }
