@@ -15,6 +15,12 @@ let sidebarOverlay;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    // Save original home content immediately
+    const dashboardContent = document.querySelector('.dashboard-content');
+    if (dashboardContent && !window.originalHomeContent) {
+        window.originalHomeContent = dashboardContent.innerHTML;
+    }
+    
     initializeMobileMenu();
     initializeNavigation();
     initializeTabs();
@@ -262,8 +268,580 @@ function initializeTabs() {
 }
 
 function handleTabSwitch(tabName) {
-    console.log(`Switching to tab: ${tabName}`);
-    // Tab content switching logic can be added here
+    const dashboardContent = document.querySelector('.dashboard-content');
+    
+    switch(tabName) {
+        case 'home':
+            renderHomeContent(dashboardContent);
+            break;
+        case 'tasks':
+            renderTasksContent(dashboardContent);
+            break;
+        case 'resources':
+            renderResourcesContent(dashboardContent);
+            break;
+        default:
+            renderHomeContent(dashboardContent);
+    }
+}
+
+function renderHomeContent(container) {
+    // Save original content on first load
+    if (!window.originalHomeContent) {
+        window.originalHomeContent = container.innerHTML;
+    }
+    
+    // Always restore from saved original content
+    container.innerHTML = window.originalHomeContent;
+    
+    // Re-initialize components after content change
+    setTimeout(() => {
+        initializeCollapsibleSections();
+        initializeSpotlightTabs();
+        initializeCalendar();
+        initializeProjectActions();
+    }, 50);
+}
+
+function renderTasksContent(container) {
+    container.innerHTML = `
+        <div class="tasks-dashboard-row">
+            <!-- Left Column -->
+            <div class="tasks-left-column">
+                <!-- My Tasks Section -->
+                <section class="my-tasks-card">
+                    <div class="section-header tasks-header">
+                        <div class="header-left">
+                            <i class="fas fa-tasks"></i>
+                            <h3>My Tasks</h3>
+                        </div>
+                        <div class="header-actions">
+                            <button class="tasks-add-btn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- In Progress Tasks -->
+                    <div class="task-group">
+                        <div class="task-group-header" data-group="in-progress">
+                            <i class="fas fa-chevron-down task-chevron"></i>
+                            <span class="task-status in-progress">IN PROGRESS</span>
+                            <span class="task-count">• 2 tasks</span>
+                            <div class="task-group-info">
+                                <span>Priority</span>
+                                <span>Due date</span>
+                            </div>
+                        </div>
+                        <div class="task-list" id="in-progress-tasks">
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task1">
+                                    <label for="task1"></label>
+                                </div>
+                                <div class="task-content">
+                                    <span class="task-title">One-on-One Meeting</span>
+                                </div>
+                                <div class="task-priority">
+                                    <span class="priority-badge high">High</span>
+                                </div>
+                                <div class="task-due-date">
+                                    <span class="due-today">Today</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task2">
+                                    <label for="task2"></label>
+                                </div>
+                                <div class="task-content">
+                                    <span class="task-title">Send a summary email to stakeholders</span>
+                                </div>
+                                <div class="task-priority">
+                                    <span class="priority-badge low">Low</span>
+                                </div>
+                                <div class="task-due-date">
+                                    <span class="due-later">3 days left</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-task-btn" data-group="in-progress">
+                            <i class="fas fa-plus"></i>
+                            <span>Add task</span>
+                        </button>
+                    </div>
+                    
+                    <!-- To Do Tasks -->
+                    <div class="task-group">
+                        <div class="task-group-header" data-group="todo">
+                            <i class="fas fa-chevron-down task-chevron"></i>
+                            <span class="task-status todo">TO DO</span>
+                            <span class="task-count">• 1 task</span>
+                        </div>
+                        <div class="task-list collapsed" id="todo-tasks">
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task3">
+                                    <label for="task3"></label>
+                                </div>
+                                <div class="task-content">
+                                    <span class="task-title">Review quarterly performance metrics</span>
+                                </div>
+                                <div class="task-priority">
+                                    <span class="priority-badge medium">Medium</span>
+                                </div>
+                                <div class="task-due-date">
+                                    <span class="due-later">Tomorrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-task-btn" data-group="todo" style="display: none;">
+                            <i class="fas fa-plus"></i>
+                            <span>Add task</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Upcoming Tasks -->
+                    <div class="task-group">
+                        <div class="task-group-header" data-group="upcoming">
+                            <i class="fas fa-chevron-down task-chevron"></i>
+                            <span class="task-status upcoming">UPCOMING</span>
+                            <span class="task-count">• 1 tasks</span>
+                        </div>
+                        <div class="task-list collapsed" id="upcoming-tasks">
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task4">
+                                    <label for="task4"></label>
+                                </div>
+                                <div class="task-content">
+                                    <span class="task-title">Prepare client presentation</span>
+                                </div>
+                                <div class="task-priority">
+                                    <span class="priority-badge high">High</span>
+                                </div>
+                                <div class="task-due-date">
+                                    <span class="due-later">Next week</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-task-btn" data-group="upcoming" style="display: none;">
+                            <i class="fas fa-plus"></i>
+                            <span>Add task</span>
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- My Goals Section -->
+                <section class="my-goals-card">
+                    <div class="section-header">
+                        <div class="header-left">
+                            <i class="fas fa-bullseye"></i>
+                            <h3>My Goals</h3>
+                        </div>
+                    </div>
+                    <div class="goals-list">
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <h4>Check Emails and Messages</h4>
+                                <p>Product launch • My Projects</p>
+                            </div>
+                            <div class="goal-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 73%"></div>
+                                </div>
+                                <span class="progress-text">73%</span>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <h4>Prepare a brief status update to the client</h4>
+                                <p>Product launch • My Projects</p>
+                            </div>
+                            <div class="goal-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 11%"></div>
+                                </div>
+                                <span class="progress-text">11%</span>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <h4>Update project documentation</h4>
+                                <p>Team brainstorm • My Projects</p>
+                            </div>
+                            <div class="goal-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 63%"></div>
+                                </div>
+                                <span class="progress-text">63%</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="tasks-right-column">
+                <!-- Time Tracking Section -->
+                <section class="time-tracking-card">
+                    <div class="section-header">
+                        <div class="header-left">
+                            <i class="fas fa-clock"></i>
+                            <h3>Time Tracking</h3>
+                        </div>
+                    </div>
+                    <div class="time-tracker-content">
+                        <div class="tracker-project">
+                            <div class="project-selector">
+                                <i class="fas fa-folder"></i>
+                                <span>Slack Web Redesign</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="time-display">
+                            <div class="time-status">AWAITING</div>
+                            <div class="time-counter" id="timeCounter">01:45:15</div>
+                            <button class="start-timer-btn" id="startTimerBtn">
+                                <i class="fas fa-play"></i>
+                                <span>Start Time Tracker</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Previous Tasks -->
+                    <div class="previous-tasks">
+                        <h4>Previous Tasks</h4>
+                        <div class="previous-task-item">
+                            <div class="task-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <div class="task-details">
+                                <span class="task-name">Loom App Design</span>
+                                <span class="task-time">1:24:23</span>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="previous-task-item">
+                            <div class="task-icon ai">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="task-details">
+                                <span class="task-name">AI Web Dashboard Design</span>
+                                <span class="task-time">00:24:23</span>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="previous-task-item">
+                            <div class="task-icon dashboard">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="task-details">
+                                <span class="task-name">AI Web Dashboard Design</span>
+                                <span class="task-time">00:24:23</span>
+                            </div>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Notes Section -->
+                <section class="notes-card">
+                    <div class="section-header">
+                        <div class="header-left">
+                            <i class="fas fa-sticky-note"></i>
+                            <h3>Notes</h3>
+                        </div>
+                        <button class="add-note-btn">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Note</span>
+                        </button>
+                    </div>
+                    <div class="notes-list">
+                        <div class="note-item">
+                            <div class="note-status"></div>
+                            <div class="note-content">
+                                <h4>Meeting with Arthur Taylor</h4>
+                                <p>Discuss the Loop Website Redesign...</p>
+                                <div class="note-tags">
+                                    <span class="tag today">Today</span>
+                                    <span class="tag meeting">Meeting</span>
+                                    <span class="note-date">Aug 03</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note-item">
+                            <div class="note-status"></div>
+                            <div class="note-content">
+                                <h4>Meeting with Arthur Taylor</h4>
+                                <p>Discuss the Loop Website Redesign...</p>
+                                <div class="note-tags">
+                                    <span class="tag today">Today</span>
+                                    <span class="tag todo">To Do</span>
+                                    <span class="note-date">Aug 03</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note-item completed">
+                            <div class="note-status completed"></div>
+                            <div class="note-content">
+                                <h4>Meeting with Arthur Taylor</h4>
+                                <p>Discuss the Loop Website Redesign...</p>
+                                <div class="note-tags">
+                                    <span class="tag today">Today</span>
+                                    <span class="tag todo">To Do</span>
+                                    <span class="note-date">Aug 03</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    `;
+    
+    // Initialize task functionality
+    initializeTasksFeatures();
+}
+
+function renderResourcesContent(container) {
+    container.innerHTML = `
+        <div class="dashboard-row">
+            <section class="resources-section">
+                <div class="section-header">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>Resources</h3>
+                </div>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h4>Project Documentation</h4>
+                        <p>Latest project specifications and requirements</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h4>Useful Links</h4>
+                        <p>Important links and references for the project</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h4>Design Assets</h4>
+                        <p>Brand guidelines, images, and design resources</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    `;
+}
+
+function initializeTasksFeatures() {
+    // Initialize task group expand/collapse
+    const taskGroupHeaders = document.querySelectorAll('.task-group-header');
+    taskGroupHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const group = this.getAttribute('data-group');
+            const taskList = document.getElementById(`${group}-tasks`);
+            const chevron = this.querySelector('.task-chevron');
+            const addButton = this.parentElement.querySelector('.add-task-btn');
+            
+            if (taskList) {
+                const isCollapsed = taskList.classList.contains('collapsed');
+                
+                if (isCollapsed) {
+                    // Expand
+                    taskList.classList.remove('collapsed');
+                    taskList.style.maxHeight = taskList.scrollHeight + 'px';
+                    chevron.style.transform = 'rotate(0deg)';
+                    if (addButton) {
+                        addButton.style.display = 'flex';
+                    }
+                } else {
+                    // Collapse
+                    taskList.style.maxHeight = '0px';
+                    taskList.classList.add('collapsed');
+                    chevron.style.transform = 'rotate(-90deg)';
+                    if (addButton) {
+                        addButton.style.display = 'none';
+                    }
+                }
+            }
+        });
+    });
+    
+    // Initialize collapsed chevrons
+    document.querySelectorAll('.task-list.collapsed').forEach(list => {
+        const header = list.previousElementSibling;
+        if (header) {
+            const chevron = header.querySelector('.task-chevron');
+            if (chevron) {
+                chevron.style.transform = 'rotate(-90deg)';
+            }
+        }
+    });
+    
+    // Initialize time tracking
+    let timeCounter = 5475; // Start from 01:45:15
+    let isRunning = false;
+    let timerInterval;
+    
+    const startBtn = document.getElementById('startTimerBtn');
+    const timeDisplay = document.getElementById('timeCounter');
+    
+    if (startBtn) {
+        startBtn.addEventListener('click', function() {
+            if (!isRunning) {
+                // Start timer
+                isRunning = true;
+                this.innerHTML = '<i class="fas fa-pause"></i><span>Pause Timer</span>';
+                this.classList.add('running');
+                
+                timerInterval = setInterval(() => {
+                    timeCounter++;
+                    updateTimeDisplay(timeDisplay, timeCounter);
+                }, 1000);
+            } else {
+                // Pause timer
+                isRunning = false;
+                this.innerHTML = '<i class="fas fa-play"></i><span>Start Time Tracker</span>';
+                this.classList.remove('running');
+                clearInterval(timerInterval);
+            }
+        });
+    }
+    
+    // Initialize task checkboxes
+    const taskCheckboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+    taskCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const taskItem = this.closest('.task-item');
+            if (this.checked) {
+                taskItem.classList.add('completed');
+            } else {
+                taskItem.classList.remove('completed');
+            }
+        });
+    });
+    
+    // Initialize add task functionality
+    const addTaskBtns = document.querySelectorAll('.add-task-btn');
+    addTaskBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const group = this.getAttribute('data-group');
+            const taskName = prompt('Enter task name:');
+            if (taskName) {
+                addNewTaskToGroup(taskName, group);
+            }
+        });
+    });
+    
+    // Initialize add note functionality
+    const addNoteBtn = document.querySelector('.add-note-btn');
+    if (addNoteBtn) {
+        addNoteBtn.addEventListener('click', function() {
+            const noteTitle = prompt('Enter note title:');
+            if (noteTitle) {
+                addNewNote(noteTitle);
+            }
+        });
+    }
+}
+
+function updateTimeDisplay(display, seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function addNewTaskToGroup(taskName, group) {
+    const taskList = document.getElementById(`${group}-tasks`);
+    const taskId = `task_${Date.now()}`;
+    
+    const taskHTML = `
+        <div class="task-item">
+            <div class="task-checkbox">
+                <input type="checkbox" id="${taskId}">
+                <label for="${taskId}"></label>
+            </div>
+            <div class="task-content">
+                <span class="task-title">${taskName}</span>
+            </div>
+            <div class="task-priority">
+                <span class="priority-badge medium">Medium</span>
+            </div>
+            <div class="task-due-date">
+                <span class="due-later">No due date</span>
+            </div>
+        </div>
+    `;
+    
+    if (taskList) {
+        taskList.insertAdjacentHTML('beforeend', taskHTML);
+        
+        // Update task count
+        const header = taskList.previousElementSibling;
+        const countSpan = header.querySelector('.task-count');
+        if (countSpan) {
+            const currentCount = parseInt(countSpan.textContent.match(/\d+/)[0]);
+            countSpan.textContent = `• ${currentCount + 1} tasks`;
+        }
+        
+        // Re-initialize checkbox for new task
+        const newCheckbox = document.getElementById(taskId);
+        newCheckbox.addEventListener('change', function() {
+            const taskItem = this.closest('.task-item');
+            if (this.checked) {
+                taskItem.classList.add('completed');
+            } else {
+                taskItem.classList.remove('completed');
+            }
+        });
+        
+        // Expand the group if it's collapsed
+        if (taskList.classList.contains('collapsed')) {
+            taskList.classList.remove('collapsed');
+            taskList.style.maxHeight = taskList.scrollHeight + 'px';
+            const chevron = header.querySelector('.task-chevron');
+            if (chevron) {
+                chevron.style.transform = 'rotate(0deg)';
+            }
+            const addButton = header.parentElement.querySelector('.add-task-btn');
+            if (addButton) {
+                addButton.style.display = 'flex';
+            }
+        } else {
+            // Update max-height for expanded groups
+            taskList.style.maxHeight = taskList.scrollHeight + 'px';
+        }
+    }
+}
+
+function addNewNote(noteTitle) {
+    const notesList = document.querySelector('.notes-list');
+    const noteHTML = `
+        <div class="note-item">
+            <div class="note-status"></div>
+            <div class="note-content">
+                <h4>${noteTitle}</h4>
+                <p>Click to add note content...</p>
+                <div class="note-tags">
+                    <span class="tag today">Today</span>
+                    <span class="tag new">New</span>
+                    <span class="note-date">${new Date().toLocaleDateString('en-US', {month: 'short', day: '2-digit'})}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    notesList.insertAdjacentHTML('afterbegin', noteHTML);
 }
 
 // Collapsible Sections
