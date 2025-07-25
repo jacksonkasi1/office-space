@@ -125,29 +125,105 @@
                     <!-- Reminders Section -->
                     <section class="reminders-section">
                         <div class="section-header">
-                            <i class="fas fa-clock"></i>
-                            <h3>Reminders</h3>
+                            <div class="header-left">
+                                <i class="fas fa-clock"></i>
+                                <h3>Reminders</h3>
+                            </div>
                         </div>
                         <div class="collapsible-section">
-                            <div class="section-toggle">
-                                <i class="fas fa-chevron-down"></i>
-                                <span>Today</span>
-                                <span class="count">2</span>
-                                <i class="fas fa-bell"></i>
+                            <div class="section-toggle" role="button" tabindex="0" aria-expanded="true">
+                                <div class="toggle-content">
+                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                                    <div class="toggle-label-group">
+                                        <span class="toggle-label">Today</span>
+                                        <span class="count-badge">2</span>
+                                    </div>
+                                </div>
+                                <div class="toggle-actions">
+                                    <button class="reminder-settings-btn" title="Reminder settings">
+                                        <i class="fas fa-bell"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="reminder-list">
-                                <div class="reminder-item">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>Assess any new risks identified in the morning meeting.</span>
+                                <div class="reminder-item" data-priority="high" role="button" tabindex="0">
+                                    <div class="reminder-content">
+                                        <div class="reminder-icon">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div class="reminder-text">
+                                            <span class="reminder-title">Assess any new risks identified in the morning meeting.</span>
+                                            <div class="reminder-meta">
+                                                <span class="priority-indicator high">High Priority</span>
+                                                <span class="reminder-time">Due in 2 hours</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reminder-actions">
+                                        <button class="reminder-action-btn" title="Edit reminder">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="reminder-action-btn" title="More options">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="reminder-item">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>Outline key points for tomorrow's stand-up meeting.</span>
+                                <div class="reminder-item" data-priority="medium" role="button" tabindex="0">
+                                    <div class="reminder-content">
+                                        <div class="reminder-icon">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div class="reminder-text">
+                                            <span class="reminder-title">Outline key points for tomorrow's stand-up meeting.</span>
+                                            <div class="reminder-meta">
+                                                <span class="priority-indicator medium">Medium Priority</span>
+                                                <span class="reminder-time">Due tomorrow</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reminder-actions">
+                                        <button class="reminder-action-btn" title="Edit reminder">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="reminder-action-btn" title="More options">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="reminder-item completed">
-                                    <i class="fas fa-check"></i>
-                                    <span>Review team performance metrics for the last quarter.</span>
+                                <div class="reminder-item completed" data-priority="low" role="button" tabindex="0">
+                                    <div class="reminder-content">
+                                        <div class="reminder-icon">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="reminder-text">
+                                            <span class="reminder-title">Review team performance metrics for the last quarter.</span>
+                                            <div class="reminder-meta">
+                                                <span class="completion-status">Completed</span>
+                                                <span class="reminder-time">Completed 2 hours ago</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="reminder-actions">
+                                        <button class="reminder-action-btn" title="Undo completion">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                        <button class="reminder-action-btn" title="More options">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
+                            <!-- Empty state (hidden by default) -->
+                            <div class="reminder-empty-state" style="display: none;">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4>All caught up!</h4>
+                                <p>No reminders for today. Great job staying on top of things.</p>
+                                <button class="add-reminder-btn">
+                                    <i class="fas fa-plus"></i>
+                                    Add Reminder
+                                </button>
                             </div>
                         </div>
                     </section>
