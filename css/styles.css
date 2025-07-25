@@ -1,3 +1,79 @@
+/* Theme System - CSS Custom Properties */
+:root {
+    /* Primary Colors */
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    
+    /* Background Colors */
+    --bg-primary: #f8f9fb;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f9fafb;
+    --bg-quaternary: #f3f4f6;
+    
+    /* Text Colors */
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-tertiary: #6b7280;
+    --text-quaternary: #9ca3af;
+    --text-inverse: #ffffff;
+    
+    /* Border Colors */
+    --border-primary: #e5e7eb;
+    --border-secondary: #f3f4f6;
+    --border-tertiary: #d1d5db;
+    
+    /* Status Colors */
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+    
+    /* Status Indicators */
+    --status-online: #22c55e;
+    --status-away: #f59e0b;
+    --status-offline: #6b7280;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-secondary: linear-gradient(135deg, var(--info-color), var(--primary-color));
+    --gradient-success: linear-gradient(135deg, var(--success-color), var(--accent-color));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 32px;
+    --space-4xl: 40px;
+    
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-base: 14px;
+    --font-size-md: 15px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-3xl: 24px;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6,9 +82,9 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #f8f9fb;
-    color: #1f2937;
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 
@@ -3448,38 +3524,38 @@ section .section-header h3 {
 /* Sidebar Styles */
 .team-chat-sidebar {
     width: 260px;
-    background: #ffffff;
-    color: #111827;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #e5e7eb;
+    border-right: 1px solid var(--border-primary);
 }
 
 /* Back Navigation */
 .back-navigation {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--border-secondary);
 }
 
 .back-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--text-tertiary);
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
     transition: all 0.2s;
     width: 100%;
     text-align: left;
 }
 
 .back-btn:hover {
-    background: #f9fafb;
-    color: #6366f1;
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
 }
 
 .back-btn i {
@@ -3487,58 +3563,58 @@ section .section-header h3 {
 }
 
 .workspace-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--border-secondary);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .workspace-info h2 {
-    font-size: 18px;
+    font-size: var(--font-size-xl);
     font-weight: 700;
-    margin: 0 0 4px 0;
-    color: #111827;
+    margin: 0 0 var(--space-xs) 0;
+    color: var(--text-primary);
 }
 
 .workspace-status {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #6b7280;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
 }
 
 .status-indicator {
-    width: 8px;
-    height: 8px;
+    width: var(--space-sm);
+    height: var(--space-sm);
     border-radius: 50%;
-    background: #22c55e;
+    background: var(--status-online);
 }
 
-.status-indicator.online { background: #22c55e; }
-.status-indicator.away { background: #f59e0b; }
-.status-indicator.offline { background: #6b7280; }
+.status-indicator.online { background: var(--status-online); }
+.status-indicator.away { background: var(--status-away); }
+.status-indicator.offline { background: var(--status-offline); }
 
 .workspace-menu-btn {
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--text-tertiary);
     cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
     transition: all 0.2s;
 }
 
 .workspace-menu-btn:hover {
-    background: #f9fafb;
-    color: #6366f1;
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
 }
 
 /* Sidebar Sections */
 .sidebar-section {
-    padding: 16px 0;
-    border-bottom: 1px solid #f3f4f6;
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border-secondary);
 }
 
 .sidebar-section:last-child {
@@ -3548,23 +3624,23 @@ section .section-header h3 {
 .sidebar-section .section-header {
     display: flex;
     align-items: center;
-    padding: 0 20px 8px 20px;
-    gap: 8px;
+    padding: 0 var(--space-xl) var(--space-sm) var(--space-xl);
+    gap: var(--space-sm);
 }
 
 .section-toggle {
     background: none;
     border: none;
-    color: #6b7280;
+    color: var(--text-tertiary);
     cursor: pointer;
     padding: 2px;
-    font-size: 12px;
+    font-size: var(--font-size-xs);
 }
 
 .sidebar-section h3 {
-    font-size: 15px;
+    font-size: var(--font-size-md);
     font-weight: 600;
-    color: #374151;
+    color: var(--text-secondary);
     margin: 0;
     flex: 1;
 }
@@ -3572,17 +3648,17 @@ section .section-header h3 {
 .add-channel-btn, .add-dm-btn {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-tertiary);
     cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
     transition: all 0.2s;
 }
 
 .add-channel-btn:hover, .add-dm-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
 }
 
 /* Channel List */
@@ -3594,80 +3670,87 @@ section .section-header h3 {
 .channel-item, .dm-item, .app-item {
     display: flex;
     align-items: center;
-    padding: 4px 20px;
-    margin: 0 8px;
-    border-radius: 6px;
+    padding: var(--space-xs) var(--space-xl);
+    margin: 0 var(--space-sm);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 15px;
+    font-size: var(--font-size-base);
+    font-weight: 500;
 }
 
 .channel-item:hover, .dm-item:hover, .app-item:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-tertiary);
 }
 
 .channel-item.active {
-    background: #1264a3;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--text-inverse);
 }
 
 .channel-icon {
-    margin-right: 8px;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.7);
+    margin-right: var(--space-sm);
+    font-size: var(--font-size-lg);
+    color: var(--text-tertiary);
 }
 
 .channel-item.active .channel-icon {
-    color: #fff;
+    color: var(--text-inverse);
 }
 
 .channel-name, .user-name, .app-name {
     flex: 1;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 400;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.channel-item.active .channel-name,
+.dm-item.active .user-name,
+.app-item.active .app-name {
+    color: var(--text-inverse);
 }
 
 .unread-badge {
-    background: #dc2626;
-    color: #fff;
-    font-size: 12px;
+    background: var(--error-color);
+    color: var(--text-inverse);
+    font-size: var(--font-size-xs);
     font-weight: 600;
-    padding: 2px 6px;
+    padding: 2px var(--space-xs);
     border-radius: 10px;
     min-width: 16px;
     text-align: center;
 }
 
 /* User Avatar in DM */
-.user-avatar {
+.team-chat-sidebar .user-avatar {
     position: relative;
-    margin-right: 8px;
+    margin-right: var(--space-sm);
 }
 
-.user-avatar img {
+.team-chat-sidebar .user-avatar img {
     width: 20px;
     height: 20px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 
 .status-dot {
     position: absolute;
     bottom: -2px;
     right: -2px;
-    width: 8px;
-    height: 8px;
+    width: var(--space-sm);
+    height: var(--space-sm);
     border-radius: 50%;
-    border: 2px solid #3c3c41;
+    border: 2px solid var(--bg-secondary);
 }
 
-.status-dot.online { background: #22c55e; }
-.status-dot.away { background: #f59e0b; }
-.status-dot.offline { background: #6b7280; }
+.status-dot.online { background: var(--status-online); }
+.status-dot.away { background: var(--status-away); }
+.status-dot.offline { background: var(--status-offline); }
 
 /* App Items */
 .app-icon {
-    margin-right: 8px;
-    font-size: 16px;
+    margin-right: var(--space-sm);
+    font-size: var(--font-size-lg);
 }
 
 /* Main Chat Area */
