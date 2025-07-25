@@ -26,8 +26,15 @@ function loadFABPosition(fab) {
     if (savedPosition) {
         try {
             const position = JSON.parse(savedPosition);
-            fab.style.left = position.x + 'px';
-            fab.style.top = position.y + 'px';
+            const margin = 20;
+            const fabSize = fab.offsetWidth;
+            
+            // Ensure saved position respects margins
+            let x = Math.max(margin, Math.min(position.x, window.innerWidth - fabSize - margin));
+            let y = Math.max(margin, Math.min(position.y, window.innerHeight - fabSize - margin));
+            
+            fab.style.left = x + 'px';
+            fab.style.top = y + 'px';
             fab.style.right = 'auto';
             fab.style.bottom = 'auto';
         } catch (error) {
@@ -47,16 +54,25 @@ function saveFABPosition(fab) {
 
 function constrainFABToViewport(fab) {
     const rect = fab.getBoundingClientRect();
-    const maxX = window.innerWidth - fab.offsetWidth;
-    const maxY = window.innerHeight - fab.offsetHeight;
+    const fabSize = fab.offsetWidth;
+    const margin = 20; // Minimum margin from viewport edges
+    const maxX = window.innerWidth - fabSize - margin;
+    const maxY = window.innerHeight - fabSize - margin;
     
     let newX = rect.left;
     let newY = rect.top;
     
-    if (rect.left > maxX) {
+    // Ensure FAB doesn't go off-screen on any side
+    if (rect.left < margin) {
+        newX = margin;
+    }
+    if (rect.right > window.innerWidth - margin) {
         newX = maxX;
     }
-    if (rect.top > maxY) {
+    if (rect.top < margin) {
+        newY = margin;
+    }
+    if (rect.bottom > window.innerHeight - margin) {
         newY = maxY;
     }
     
@@ -128,12 +144,13 @@ function makeFABDraggable(fab) {
         const newX = e.clientX - startX;
         const newY = e.clientY - startY;
         
-        // Constrain to viewport bounds
-        const maxX = window.innerWidth - fab.offsetWidth;
-        const maxY = window.innerHeight - fab.offsetHeight;
+        // Constrain to viewport bounds with proper margins
+        const margin = 20;
+        const maxX = window.innerWidth - fab.offsetWidth - margin;
+        const maxY = window.innerHeight - fab.offsetHeight - margin;
         
-        const constrainedX = Math.max(0, Math.min(newX, maxX));
-        const constrainedY = Math.max(0, Math.min(newY, maxY));
+        const constrainedX = Math.max(margin, Math.min(newX, maxX));
+        const constrainedY = Math.max(margin, Math.min(newY, maxY));
         
         fab.style.left = constrainedX + 'px';
         fab.style.top = constrainedY + 'px';
@@ -149,12 +166,13 @@ function makeFABDraggable(fab) {
         const newX = touch.clientX - startX;
         const newY = touch.clientY - startY;
         
-        // Constrain to viewport bounds
-        const maxX = window.innerWidth - fab.offsetWidth;
-        const maxY = window.innerHeight - fab.offsetHeight;
+        // Constrain to viewport bounds with proper margins
+        const margin = 20;
+        const maxX = window.innerWidth - fab.offsetWidth - margin;
+        const maxY = window.innerHeight - fab.offsetHeight - margin;
         
-        const constrainedX = Math.max(0, Math.min(newX, maxX));
-        const constrainedY = Math.max(0, Math.min(newY, maxY));
+        const constrainedX = Math.max(margin, Math.min(newX, maxX));
+        const constrainedY = Math.max(margin, Math.min(newY, maxY));
         
         fab.style.left = constrainedX + 'px';
         fab.style.top = constrainedY + 'px';
@@ -206,94 +224,147 @@ export function showQuickActions() {
         </div>
     `;
     
-    // Calculate position relative to FAB
-    const menuWidth = 180;
-    const menuHeight = 120; // Approximate height
-    const spacing = 8; // Reduced spacing for better alignment
+    // Calculate menu dimensions
+    const menuWidth = 200;
+    const menuHeight = 140;
+    const spacing = 16; // Increased spacing between FAB and menu
+    const margin = 20; // Minimum margin from viewport edges
     
-    // Position menu to the left of FAB, aligned with FAB center
-    let left = fabRect.left - menuWidth - spacing;
-    let top = fabRect.top + (fabRect.height / 2) - (menuHeight / 2); // Center align vertically
-    let arrowPosition = 'right'; // Arrow pointing right (from menu to FAB)
+    // Calculate available space in each direction
+    const spaceLeft = fabRect.left - margin;
+    const spaceRight = window.innerWidth - fabRect.right - margin;
+    const spaceTop = fabRect.top - margin;
+    const spaceBottom = window.innerHeight - fabRect.bottom - margin;
     
-    // If menu would go off-screen to the left, position it to the right of FAB
-    if (left < 0) {
-        left = fabRect.right + spacing;
-        arrowPosition = 'left'; // Arrow pointing left (from menu to FAB)
-    }
+    // Determine best position based on available space
+    let position = 'left'; // Default position
+    let left, top;
     
-    // If menu would go off-screen to the right, position it to the left of FAB
-    if (left + menuWidth > window.innerWidth) {
+    // Check if we have enough space on the left
+    if (spaceLeft >= menuWidth + spacing) {
+        position = 'left';
         left = fabRect.left - menuWidth - spacing;
-        arrowPosition = 'right'; // Arrow pointing right (from menu to FAB)
+        top = fabRect.top + (fabRect.height / 2) - (menuHeight / 2);
+    }
+    // Check if we have enough space on the right
+    else if (spaceRight >= menuWidth + spacing) {
+        position = 'right';
+        left = fabRect.right + spacing;
+        top = fabRect.top + (fabRect.height / 2) - (menuHeight / 2);
+    }
+    // Check if we have enough space above
+    else if (spaceTop >= menuHeight + spacing) {
+        position = 'top';
+        left = fabRect.left + (fabRect.width / 2) - (menuWidth / 2);
+        top = fabRect.top - menuHeight - spacing;
+    }
+    // Check if we have enough space below
+    else if (spaceBottom >= menuHeight + spacing) {
+        position = 'bottom';
+        left = fabRect.left + (fabRect.width / 2) - (menuWidth / 2);
+        top = fabRect.bottom + spacing;
+    }
+    // If no ideal position, choose the one with most space and adjust
+    else {
+        const maxSpace = Math.max(spaceLeft, spaceRight, spaceTop, spaceBottom);
+        if (maxSpace === spaceLeft) {
+            position = 'left';
+            left = margin;
+            top = fabRect.top + (fabRect.height / 2) - (menuHeight / 2);
+        } else if (maxSpace === spaceRight) {
+            position = 'right';
+            left = window.innerWidth - menuWidth - margin;
+            top = fabRect.top + (fabRect.height / 2) - (menuHeight / 2);
+        } else if (maxSpace === spaceTop) {
+            position = 'top';
+            left = fabRect.left + (fabRect.width / 2) - (menuWidth / 2);
+            top = margin;
+        } else {
+            position = 'bottom';
+            left = fabRect.left + (fabRect.width / 2) - (menuWidth / 2);
+            top = window.innerHeight - menuHeight - margin;
+        }
     }
     
-    // If menu would go off-screen at the bottom, adjust upward
-    if (top + menuHeight > window.innerHeight) {
-        top = window.innerHeight - menuHeight - 20; // 20px margin from bottom
+    // Constrain to viewport bounds with better edge handling
+    left = Math.max(margin, Math.min(left, window.innerWidth - menuWidth - margin));
+    top = Math.max(margin, Math.min(top, window.innerHeight - menuHeight - margin));
+    
+    // Additional check for bottom edge - if menu would be cut off, move it up
+    if (top + menuHeight > window.innerHeight - margin) {
+        top = window.innerHeight - menuHeight - margin;
     }
     
-    // If menu would go off-screen at the top, adjust downward
-    if (top < 20) { // 20px margin from top
-        top = 20;
+    // Additional check for right edge - if menu would be cut off, move it left
+    if (left + menuWidth > window.innerWidth - margin) {
+        left = window.innerWidth - menuWidth - margin;
     }
     
-    // Add arrow indicator
-    const arrow = document.createElement('div');
-    arrow.style.cssText = `
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border: 6px solid transparent;
-        z-index: 1002;
-    `;
-    
-    if (arrowPosition === 'right') {
-        arrow.style.right = '-12px';
-        arrow.style.borderLeftColor = 'white';
-        arrow.style.borderRight = 'none';
-    } else {
-        arrow.style.left = '-12px';
-        arrow.style.borderRightColor = 'white';
-        arrow.style.borderLeft = 'none';
-    }
-    
-    // Add styles
+    // Add styles with improved design
     menu.style.cssText = `
         position: fixed;
         left: ${left}px;
         top: ${top}px;
         background: white;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        padding: 8px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 12px;
         z-index: 1001;
         min-width: ${menuWidth}px;
         border: 1px solid #e5e7eb;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     `;
     
-    menu.appendChild(arrow);
     document.body.appendChild(menu);
     
-    // Add event listeners to quick actions
+    // Add event listeners to quick actions with improved styling
     menu.querySelectorAll('.quick-action').forEach(action => {
         action.style.cssText = `
             display: flex;
             align-items: center;
-            padding: 12px 16px;
+            padding: 16px 20px;
             cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.2s;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            position: relative;
         `;
         
+        // Add hover state
         action.addEventListener('mouseenter', function() {
-            this.style.backgroundColor = '#f9fafb';
+            this.style.backgroundColor = '#f3f4f6';
+            this.style.transform = 'translateX(2px)';
         });
         
         action.addEventListener('mouseleave', function() {
             this.style.backgroundColor = 'transparent';
+            this.style.transform = 'translateX(0)';
+        });
+        
+        // Add focus state for accessibility
+        action.addEventListener('focus', function() {
+            this.style.backgroundColor = '#f3f4f6';
+            this.style.outline = '2px solid #6366f1';
+            this.style.outlineOffset = '2px';
+        });
+        
+        action.addEventListener('blur', function() {
+            this.style.backgroundColor = 'transparent';
+            this.style.outline = 'none';
+        });
+        
+        // Add active state
+        action.addEventListener('mousedown', function() {
+            this.style.backgroundColor = '#e5e7eb';
+            this.style.transform = 'translateX(1px) scale(0.98)';
+        });
+        
+        action.addEventListener('mouseup', function() {
+            this.style.backgroundColor = '#f3f4f6';
+            this.style.transform = 'translateX(2px) scale(1)';
         });
         
         action.addEventListener('click', function() {
@@ -303,13 +374,31 @@ export function showQuickActions() {
         });
     });
     
-    // Style icons and text
+    // Style icons with consistent appearance
     menu.querySelectorAll('.quick-action i').forEach(icon => {
-        icon.style.cssText = 'margin-right: 12px; color: #6366f1; width: 16px;';
+        icon.style.cssText = `
+            margin-right: 16px;
+            color: #6366f1;
+            width: 18px;
+            height: 18px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        `;
     });
     
+    // Style text with better alignment
     menu.querySelectorAll('.quick-action span').forEach(span => {
-        span.style.cssText = 'font-size: 14px; color: #374151; font-weight: 500;';
+        span.style.cssText = `
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+        `;
     });
     
     // Close menu when clicking outside
