@@ -94,7 +94,7 @@ export function updateMainContent(page) {
                         <div class="message-list">
                             <div class="message-item unread">
                                 <div class="message-avatar">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="User">
+                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=John+Doe" alt="User">
                                 </div>
                                 <div class="message-content">
                                     <h4>John Doe</h4>
@@ -104,7 +104,7 @@ export function updateMainContent(page) {
                             </div>
                             <div class="message-item">
                                 <div class="message-avatar">
-                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b647?w=40&h=40&fit=crop&crop=face" alt="User">
+                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=User2" alt="User">
                                 </div>
                                 <div class="message-content">
                                     <h4>Sarah Wilson</h4>
@@ -209,21 +209,21 @@ export function updateMainContent(page) {
                             <div class="dm-list">
                                 <div class="dm-item">
                                     <div class="user-avatar">
-                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Nathan Wood">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Nathan+Wood" alt="Nathan Wood">
                                         <span class="status-dot online"></span>
                                     </div>
                                     <span class="user-name">Nathan Wood</span>
                                 </div>
                                 <div class="dm-item">
                                     <div class="user-avatar">
-                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face" alt="Ashley Adams">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Ashley+Adams" alt="Ashley Adams">
                                         <span class="status-dot away"></span>
                                     </div>
                                     <span class="user-name">Ashley Adams</span>
                                 </div>
                                 <div class="dm-item">
                                     <div class="user-avatar">
-                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Sarah Johnson">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Sarah+Johnson" alt="Sarah Johnson">
                                         <span class="status-dot offline"></span>
                                     </div>
                                     <span class="user-name">Sarah Johnson</span>
@@ -277,7 +277,7 @@ export function updateMainContent(page) {
                         <div class="messages-container">
                             <div class="message-group">
                                 <div class="message-header">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=36&h=36&fit=crop&crop=face" alt="Macrow" class="message-avatar">
+                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=Macrow" alt="Macrow" class="message-avatar">
                                     <span class="message-author">Macrow</span>
                                     <span class="message-time">21:15 PM</span>
                                 </div>
@@ -301,7 +301,7 @@ export function updateMainContent(page) {
 
                             <div class="message-group">
                                 <div class="message-header">
-                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=36&h=36&fit=crop&crop=face" alt="Mondialov" class="message-avatar">
+                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=Mondialov" alt="Mondialov" class="message-avatar">
                                     <span class="message-author">Mondialov</span>
                                     <span class="message-time">21:24 PM</span>
                                 </div>
@@ -329,7 +329,7 @@ export function updateMainContent(page) {
 
                             <div class="message-group">
                                 <div class="message-header">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=36&h=36&fit=crop&crop=face" alt="Javier Ortiz" class="message-avatar">
+                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=Javier+Ortiz" alt="Javier Ortiz" class="message-avatar">
                                     <span class="message-author">Javier Ortiz</span>
                                     <span class="message-time">22:53 PM</span>
                                 </div>

@@ -290,7 +290,7 @@ export function renderResourcesContent(container) {
                     <div class="activity-list">
                         <div class="activity-item">
                             <div class="activity-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Sarah+Johnson" alt="Sarah Johnson">
                             </div>
                             <div class="activity-info">
                                 <span class="activity-text"><strong>Sarah Johnson</strong> downloaded <em>Budget Template</em></span>
@@ -300,7 +300,7 @@ export function renderResourcesContent(container) {
                         
                         <div class="activity-item">
                             <div class="activity-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Mike+Chen" alt="Mike Chen">
                             </div>
                             <div class="activity-info">
                                 <span class="activity-text"><strong>Mike Chen</strong> added new <em>Training Material</em></span>
@@ -310,7 +310,7 @@ export function renderResourcesContent(container) {
                         
                         <div class="activity-item">
                             <div class="activity-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Emma+Davis" alt="Emma Davis">
                             </div>
                             <div class="activity-info">
                                 <span class="activity-text"><strong>Emma Davis</strong> updated <em>Policy Document</em></span>
@@ -320,7 +320,7 @@ export function renderResourcesContent(container) {
                         
                         <div class="activity-item">
                             <div class="activity-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Alex+Kim" alt="Alex Kim">
                             </div>
                             <div class="activity-info">
                                 <span class="activity-text"><strong>Alex Kim</strong> shared <em>Presentation Template</em></span>
@@ -374,7 +374,7 @@ export function renderBlogsContent(container) {
                     <div class="hero-article-info">
                         <div class="author-info">
                             <div class="author-avatar">
-                                <i class="fas fa-user"></i>
+                                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Jackson" alt="Jackson">
                             </div>
                             <span class="author-name">Jackson • 8 min read</span>
                         </div>
@@ -533,7 +533,7 @@ export function renderBlogsContent(container) {
                 <div class="blog-content">
                     <div class="author-info">
                         <div class="author-avatar">
-                            <i class="fas fa-user"></i>
+                            <img src="https://api.dicebear.com/9.x/micah/svg?seed=Jackson+Author" alt="Jackson">
                         </div>
                         <span class="author-name">Jackson • 12 min read</span>
                     </div>

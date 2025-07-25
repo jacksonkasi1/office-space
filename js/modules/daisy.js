@@ -81,7 +81,7 @@ export function addDaisyMessage(content, sender) {
                 <span class="message-time">${time}</span>
             </div>
             <div class="message-avatar">
-                <i class="fas fa-user"></i>
+                <img src="https://api.dicebear.com/9.x/micah/svg?seed=Jackson" alt="User">
             </div>
         `;
     }
