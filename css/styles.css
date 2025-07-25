@@ -362,7 +362,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Main Header */
@@ -422,7 +423,7 @@ body {
     flex-direction: column;
     gap: 32px;
     flex: 1;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .dashboard-row {
@@ -3297,16 +3298,35 @@ section .section-header h3 {
     border: none;
     border-radius: 50%;
     font-size: 20px;
-    cursor: pointer;
+    cursor: grab;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
     transition: all 0.2s;
     z-index: 1000;
+    user-select: none;
+    touch-action: none;
 }
 
 .fab:hover {
     background-color: #5b5bc7;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
+}
+
+.fab:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.6);
+}
+
+/* Subtle pulse animation to indicate draggability */
+@keyframes fabPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.fab:hover {
+    animation: fabPulse 2s infinite;
 }
 
 /* Daisy AI Styles */
@@ -4541,7 +4561,8 @@ section .section-header h3 {
         margin-left: 0;
         padding: 24px 20px;
         height: 100vh;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     
     .greeting {
@@ -4562,6 +4583,7 @@ section .section-header h3 {
         width: 48px;
         height: 48px;
         font-size: 18px;
+        cursor: grab;
     }
     
     /* Resources Mobile */
