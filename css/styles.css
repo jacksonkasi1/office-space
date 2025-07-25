@@ -359,6 +359,10 @@ body {
     margin-left: 280px;
     padding: 32px 40px;
     background-color: #f8f9fb;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Main Header */
@@ -417,6 +421,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    flex: 1;
+    overflow: hidden;
 }
 
 .dashboard-row {
@@ -4534,6 +4540,8 @@ section .section-header h3 {
     .main-content {
         margin-left: 0;
         padding: 24px 20px;
+        height: 100vh;
+        overflow: hidden;
     }
     
     .greeting {
@@ -4746,5 +4754,463 @@ section .section-header h3 {
     
     .modal-content {
         margin: 0;
+    }
+}
+
+/* Inbox Styles */
+.inbox-container {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.inbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-xl);
+    border-bottom: 1px solid var(--border-primary);
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.inbox-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.inbox-title h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.message-count {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.inbox-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.inbox-action-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.inbox-action-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.message-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.message-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.message-item:hover {
+    background: var(--bg-tertiary);
+}
+
+.message-item.unread {
+    background: var(--bg-quaternary);
+    border-left: 3px solid var(--primary-color);
+}
+
+.message-item.unread:hover {
+    background: var(--bg-tertiary);
+}
+
+.message-avatar {
+    position: relative;
+    margin-right: var(--space-md);
+    flex-shrink: 0;
+}
+
+.message-avatar img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.unread-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.message-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-xs);
+}
+
+.sender-name {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.message-time {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    margin-left: var(--space-md);
+}
+
+.message-preview {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-sm) 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.message-meta {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.message-type {
+    background: var(--bg-quaternary);
+    color: var(--text-secondary);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.priority {
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.priority.high {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.priority.medium {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.priority.low {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.message-actions {
+    display: flex;
+    gap: var(--space-xs);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-left: var(--space-md);
+}
+
+.message-action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.message-action-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.inbox-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4xl);
+    text-align: center;
+}
+
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-quaternary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+}
+
+.empty-state-icon i {
+    font-size: 32px;
+    color: var(--text-tertiary);
+}
+
+.inbox-empty-state h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+.inbox-empty-state p {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    margin: 0;
+}
+
+/* Filter Dropdown */
+.filter-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    min-width: 200px;
+    margin-top: var(--space-xs);
+}
+
+.filter-option {
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: var(--font-size-sm);
+}
+
+.filter-option:hover {
+    background: var(--bg-tertiary);
+}
+
+.filter-option:first-child {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.filter-option:last-child {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+/* Search Bar */
+.inbox-search-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: var(--space-xl);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.search-input-container {
+    display: flex;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-input-container i {
+    color: var(--text-tertiary);
+    margin-right: var(--space-sm);
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: var(--font-size-sm);
+    flex: 1;
+    color: var(--text-primary);
+}
+
+.search-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    margin-left: var(--space-sm);
+    transition: all 0.2s ease;
+}
+
+.close-search-btn:hover {
+    background: var(--bg-quaternary);
+    color: var(--text-secondary);
+}
+
+/* Message Feedback */
+.message-feedback {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    background: var(--primary-color);
+    color: white;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.message-feedback.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Compose Button */
+.inbox-compose-btn {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s ease;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    z-index: 100;
+}
+
+.inbox-compose-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+.inbox-compose-btn i {
+    font-size: var(--font-size-md);
+}
+
+/* Responsive Design for Inbox */
+@media (max-width: 768px) {
+    .inbox-container {
+        margin: 0;
+        border-radius: 0;
+        height: 100vh;
+    }
+    
+    .inbox-header {
+        padding: var(--space-lg);
+    }
+    
+    .inbox-title h2 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .message-list {
+        flex: 1;
+        max-height: none;
+    }
+    
+    .message-item {
+        padding: var(--space-md);
+    }
+    
+    .message-avatar img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .message-actions {
+        opacity: 1;
+    }
+    
+    .message-feedback {
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+        left: var(--space-lg);
+    }
+    
+    .inbox-compose-btn {
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+        padding: var(--space-sm) var(--space-md);
+    }
+    
+    .inbox-compose-btn span {
+        display: none;
     }
 }

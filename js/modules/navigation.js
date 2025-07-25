@@ -26,8 +26,24 @@ export function handleNavigation(page) {
     // This function can be extended to handle different page content
     console.log(`Navigating to: ${page}`);
     
+    // Update active navigation item
+    updateActiveNavigation(page);
+    
     // Update main content based on navigation
     updateMainContent(page);
+}
+
+export function updateActiveNavigation(page) {
+    // Remove active class from all nav items
+    if (window.navItems) {
+        window.navItems.forEach(nav => nav.parentElement.classList.remove('active'));
+        
+        // Add active class to current page
+        const currentNavItem = document.querySelector(`[data-page="${page}"]`);
+        if (currentNavItem) {
+            currentNavItem.parentElement.classList.add('active');
+        }
+    }
 }
 
 
@@ -84,38 +100,7 @@ export function updateMainContent(page) {
             tabNavigation.style.display = 'none';
             greeting.style.display = 'block';
             document.querySelector('.sidebar').style.display = 'block';
-            dashboardContent.innerHTML = `
-                <div class="dashboard-row">
-                    <section class="inbox-section">
-                        <div class="section-header">
-                            <i class="fas fa-envelope"></i>
-                            <h3>Recent Messages</h3>
-                        </div>
-                        <div class="message-list">
-                            <div class="message-item unread">
-                                <div class="message-avatar">
-                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=John+Doe" alt="User">
-                                </div>
-                                <div class="message-content">
-                                    <h4>John Doe</h4>
-                                    <p>Project update meeting scheduled for tomorrow</p>
-                                    <span class="message-time">2 hours ago</span>
-                                </div>
-                            </div>
-                            <div class="message-item">
-                                <div class="message-avatar">
-                                    <img src="https://api.dicebear.com/9.x/micah/svg?seed=User2" alt="User">
-                                </div>
-                                <div class="message-content">
-                                    <h4>Sarah Wilson</h4>
-                                    <p>Great work on the presentation!</p>
-                                    <span class="message-time">5 hours ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            `;
+            window.renderInboxContent(dashboardContent);
             break;
             
         case 'calendar':

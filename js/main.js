@@ -1,6 +1,6 @@
 // Entry point for the modular Office Space application
 import { initializeMobileMenu, toggleSidebar, closeSidebar } from './modules/mobileMenu.js';
-import { initializeNavigation, handleNavigation, updateMainContent } from './modules/navigation.js';
+import { initializeNavigation, handleNavigation, updateMainContent, updateActiveNavigation } from './modules/navigation.js';
 import { initializeTabs, handleTabSwitch, renderHomeContent, renderDaisyAI } from './modules/tabs.js';
 import { renderKanbanBoard, renderTasksContent, initializeKanbanBoard, initializeDragAndDrop, handleDragStart, handleDragEnd, handleDragOver, handleDragEnter, handleDragLeave, handleDrop, openTaskModal, closeTaskModal, addLabel, updateSelectedLabels, removeLabel, addAssignee, updateSelectedAssignees, removeAssignee, initializeTaskModal, handleTaskSubmit, createTaskCard, initializeTasksFeatures, updateTimeDisplay, addNewTaskToGroup, addNewNote } from './modules/tasks.js';
 import { renderResourcesContent, renderBlogsContent } from './modules/resourcesBlogs.js';
@@ -10,6 +10,7 @@ import { initializeCalendar, navigateMonth, updateCalendarDisplay } from './modu
 import { initializeSpotlightTabs, showSpotlightContent } from './modules/spotlight.js';
 import { initializeFAB, showQuickActions, handleQuickAction } from './modules/fab.js';
 import { initializeDaisyAI, sendDaisyMessage, addDaisyMessage, generateDaisyResponse, handleDaisyQuickAction, applySuggestion, addRecentActivity, clearDaisyChat, attachFile, toggleVoice } from './modules/daisy.js';
+import { renderInboxContent, initializeInboxFeatures, handleInboxAction, handleMessageAction, markAsRead, markAllAsRead, archiveMessage, replyToMessage, openMessageDetail, updateUnreadCount, showFilterOptions, applyFilter, showSearchBar, searchMessages, showEmptyState, showMessageFeedback, composeNewMessage } from './modules/inbox.js';
 import { formatDate, debounce, initializeTheme } from './modules/utils.js';
 
 
@@ -72,9 +73,27 @@ import { formatDate, debounce, initializeTheme } from './modules/utils.js';
     window.toggleVoice = toggleVoice;
     window.updateCalendarDisplay = updateCalendarDisplay;
     window.updateMainContent = updateMainContent;
+    window.updateActiveNavigation = updateActiveNavigation;
     window.updateSelectedAssignees = updateSelectedAssignees;
     window.updateSelectedLabels = updateSelectedLabels;
     window.updateTimeDisplay = updateTimeDisplay;
+    window.renderInboxContent = renderInboxContent;
+    window.initializeInboxFeatures = initializeInboxFeatures;
+    window.handleInboxAction = handleInboxAction;
+    window.handleMessageAction = handleMessageAction;
+    window.markAsRead = markAsRead;
+    window.markAllAsRead = markAllAsRead;
+    window.archiveMessage = archiveMessage;
+    window.replyToMessage = replyToMessage;
+    window.openMessageDetail = openMessageDetail;
+    window.updateUnreadCount = updateUnreadCount;
+    window.showFilterOptions = showFilterOptions;
+    window.applyFilter = applyFilter;
+    window.showSearchBar = showSearchBar;
+    window.searchMessages = searchMessages;
+    window.showEmptyState = showEmptyState;
+    window.showMessageFeedback = showMessageFeedback;
+    window.composeNewMessage = composeNewMessage;
 // Initialize global DOM references once the content is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize global DOM references
