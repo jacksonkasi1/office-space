@@ -997,6 +997,7 @@ section .section-header h3 {
 .date {
     aspect-ratio: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 14px;
@@ -1008,6 +1009,14 @@ section .section-header h3 {
     background: white;
     border: 1px solid transparent;
     min-height: 36px;
+    position: relative;
+    padding: 4px;
+}
+
+.date-number {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
 }
 
 .date:hover {
@@ -1023,6 +1032,19 @@ section .section-header h3 {
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
+.date.current .date-number {
+    color: white;
+}
+
+.date.has-events {
+    background-color: #fef3c7;
+    border-color: #f59e0b;
+}
+
+.date.has-events:hover {
+    background-color: #fde68a;
+}
+
 .date.empty {
     background: transparent;
     border: none;
@@ -1032,6 +1054,228 @@ section .section-header h3 {
 .date.empty:hover {
     background: transparent;
     transform: none;
+}
+
+/* Event Indicators */
+.event-indicators {
+    display: flex;
+    gap: 2px;
+    margin-top: 2px;
+    justify-content: center;
+}
+
+.event-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #6366f1;
+}
+
+.event-dot.meeting {
+    background-color: #3b82f6;
+}
+
+.event-dot.deadline {
+    background-color: #ef4444;
+}
+
+.event-dot.deadline.high {
+    background-color: #dc2626;
+}
+
+.event-dot.event {
+    background-color: #10b981;
+}
+
+/* Event Tooltip */
+.event-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    min-width: 200px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.date:hover .event-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+.tooltip-content {
+    font-size: 12px;
+}
+
+.tooltip-event {
+    padding: 4px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.tooltip-event:last-child {
+    border-bottom: none;
+}
+
+.tooltip-event-title {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 2px;
+}
+
+.tooltip-event-time {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.tooltip-event-location {
+    color: #059669;
+    font-size: 11px;
+    margin-bottom: 2px;
+}
+
+/* More Events Indicator */
+.more-events-indicator {
+    margin-top: 8px;
+    padding: 4px 8px;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Quick Event Modal */
+.quick-event-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.quick-event-content {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    min-width: 400px;
+    max-width: 500px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.quick-event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.quick-event-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.close-quick-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-quick-modal:hover {
+    color: #374151;
+}
+
+.quick-event-body {
+    margin-bottom: 24px;
+}
+
+.quick-event-body .form-group {
+    margin-bottom: 16px;
+}
+
+.quick-event-body .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.quick-event-body .form-group input,
+.quick-event-body .form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.quick-event-body .form-group input:focus,
+.quick-event-body .form-group select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.quick-event-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.quick-event-footer button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-quick-event {
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.cancel-quick-event:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.save-quick-event {
+    background: #6366f1;
+    border: 1px solid #6366f1;
+    color: white;
+}
+
+.save-quick-event:hover {
+    background: #4f46e5;
+    border-color: #4f46e5;
 }
 
 /* Calendar Header Actions */
@@ -1106,6 +1350,43 @@ section .section-header h3 {
     .calendar-month-selector {
         font-size: 14px;
     }
+    
+    /* Responsive event cards */
+    .event-card {
+        padding: 12px;
+    }
+    
+    .event-header h4 {
+        font-size: 14px;
+    }
+    
+    .event-details {
+        gap: 8px;
+    }
+    
+    .event-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .event-details span {
+        font-size: 11px;
+    }
+    
+    .attendees {
+        gap: 4px;
+    }
+    
+    .attendee-avatar {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .attendee-avatar img {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 /* Meeting Info */
@@ -1114,11 +1395,172 @@ section .section-header h3 {
     padding-top: 20px;
 }
 
-.meeting-header {
+/* Events Container and Cards */
+.events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.event-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.event-card:hover {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+}
+
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.event-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.event-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.event-time {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.event-details {
     display: flex;
     align-items: center;
+    gap: 12px;
+}
+
+.event-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border-radius: 8px;
+    color: #6366f1;
+    font-size: 14px;
+}
+
+.event-icon i {
+    color: inherit;
+}
+
+.event-details span {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* Empty Events State */
+.empty-events-state {
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.empty-events-icon {
+    width: 64px;
+    height: 64px;
+    background: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: #9ca3af;
+    font-size: 24px;
+}
+
+.empty-events-state h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 8px 0;
+}
+
+.empty-events-state p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 20px 0;
+}
+
+.add-first-event-btn {
+    background: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-first-event-btn:hover {
+    background: #4f46e5;
+    transform: translateY(-1px);
+}
+
+.add-first-event-btn i {
+    font-size: 12px;
+}
+
+.meeting-header {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 8px;
+}
+
+.meeting-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.quick-add-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 10px;
+}
+
+.quick-add-btn:hover {
+    background: #4f46e5;
+    transform: scale(1.05);
 }
 
 .meeting-header h4 {

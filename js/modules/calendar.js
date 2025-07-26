@@ -11,6 +11,79 @@ let homeCalendarMonth = 6; // July (0-indexed)
 let homeCalendarYear = 2024;
 let homeCalendarSelectedDate = new Date(2024, 6, 8); // July 8, 2024
 
+// Sample events data for home calendar
+const homeCalendarEvents = [
+    {
+        id: 1,
+        title: 'Meeting with VP',
+        date: '2024-07-08',
+        time: '10:00 - 11:00 AM',
+        type: 'meeting',
+        attendees: 3,
+        location: 'Google Meet',
+        organizer: 'Sarah Johnson'
+    },
+    {
+        id: 2,
+        title: 'Team Standup',
+        date: '2024-07-09',
+        time: '09:00 - 09:30 AM',
+        type: 'meeting',
+        attendees: 8,
+        location: 'Conference Room A',
+        organizer: 'Mike Chen'
+    },
+    {
+        id: 3,
+        title: 'Project Review',
+        date: '2024-07-10',
+        time: '02:00 - 03:00 PM',
+        type: 'meeting',
+        attendees: 5,
+        location: 'Zoom',
+        organizer: 'Emily Davis'
+    },
+    {
+        id: 4,
+        title: 'Client Call',
+        date: '2024-07-11',
+        time: '11:00 - 12:00 PM',
+        type: 'meeting',
+        attendees: 4,
+        location: 'Teams',
+        organizer: 'Alex Thompson'
+    },
+    {
+        id: 5,
+        title: 'Deadline: Q2 Report',
+        date: '2024-07-12',
+        time: '05:00 PM',
+        type: 'deadline',
+        priority: 'high',
+        organizer: 'Courtney Henry'
+    },
+    {
+        id: 6,
+        title: 'Team Lunch',
+        date: '2024-07-13',
+        time: '12:00 - 01:00 PM',
+        type: 'event',
+        attendees: 12,
+        location: 'Office Cafeteria',
+        organizer: 'David Wilson'
+    },
+    {
+        id: 7,
+        title: 'Product Launch Prep',
+        date: '2024-07-14',
+        time: '03:00 - 04:30 PM',
+        type: 'meeting',
+        attendees: 6,
+        location: 'Board Room',
+        organizer: 'Lisa Park'
+    }
+];
+
 // Month names for display
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -408,6 +481,17 @@ export function initializeHomeCalendar() {
         });
     }
     
+    // Add quick add event button handler
+    const quickAddBtn = document.querySelector('.quick-add-btn');
+    if (quickAddBtn) {
+        quickAddBtn.addEventListener('click', () => {
+            // Open quick add event modal or form
+            console.log('Quick add event clicked for date:', homeCalendarSelectedDate);
+            // Here you could open a simple modal to add an event
+            showQuickAddEventModal();
+        });
+    }
+    
     // Add click handlers to date elements
     dateElements.forEach(date => {
         date.addEventListener('click', function() {
@@ -427,6 +511,11 @@ export function initializeHomeCalendar() {
     
     // Initialize display
     updateHomeCalendarDisplay();
+    
+    // Show events for current date
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0];
+    showEventsForDate(todayString);
 }
 
 export function navigateHomeCalendarMonth(direction) {
@@ -477,10 +566,42 @@ export function updateHomeCalendarGrid() {
         const date = new Date(weekStart);
         date.setDate(weekStart.getDate() + i);
         
+        const dateString = date.toISOString().split('T')[0];
         const dateElement = document.createElement('div');
         dateElement.className = 'date';
-        dateElement.textContent = date.getDate();
-        dateElement.setAttribute('data-date', date.toISOString().split('T')[0]);
+        dateElement.setAttribute('data-date', dateString);
+        
+        // Create date number element
+        const dateNumber = document.createElement('span');
+        dateNumber.className = 'date-number';
+        dateNumber.textContent = date.getDate();
+        dateElement.appendChild(dateNumber);
+        
+        // Check if this date has events
+        const eventsForDate = homeCalendarEvents.filter(event => event.date === dateString);
+        if (eventsForDate.length > 0) {
+            dateElement.classList.add('has-events');
+            
+            // Add event indicators
+            const eventIndicators = document.createElement('div');
+            eventIndicators.className = 'event-indicators';
+            
+            eventsForDate.forEach(event => {
+                const indicator = document.createElement('div');
+                indicator.className = `event-dot ${event.type}`;
+                if (event.priority) {
+                    indicator.classList.add(event.priority);
+                }
+                indicator.setAttribute('title', `${event.title} - ${event.time}`);
+                eventIndicators.appendChild(indicator);
+            });
+            
+            dateElement.appendChild(eventIndicators);
+            
+            // Add hover tooltip
+            const tooltip = createEventTooltip(eventsForDate);
+            dateElement.appendChild(tooltip);
+        }
         
         // Check if this is the current date
         const today = new Date();
@@ -493,9 +614,183 @@ export function updateHomeCalendarGrid() {
             document.querySelectorAll('.calendar-grid .date').forEach(d => d.classList.remove('current'));
             this.classList.add('current');
             homeCalendarSelectedDate = new Date(this.getAttribute('data-date'));
+            
+            // Show events for selected date
+            showEventsForDate(dateString);
         });
         
         calendarGrid.appendChild(dateElement);
+    }
+}
+
+function createEventTooltip(events) {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'event-tooltip';
+    
+    const tooltipContent = document.createElement('div');
+    tooltipContent.className = 'tooltip-content';
+    
+    events.forEach(event => {
+        const eventItem = document.createElement('div');
+        eventItem.className = 'tooltip-event';
+        
+        const eventTitle = document.createElement('div');
+        eventTitle.className = 'tooltip-event-title';
+        eventTitle.textContent = event.title;
+        
+        const eventTime = document.createElement('div');
+        eventTime.className = 'tooltip-event-time';
+        eventTime.textContent = event.time;
+        
+        if (event.location) {
+            const eventLocation = document.createElement('div');
+            eventLocation.className = 'tooltip-event-location';
+            eventLocation.textContent = event.location;
+            eventItem.appendChild(eventLocation);
+        }
+        
+        eventItem.appendChild(eventTitle);
+        eventItem.appendChild(eventTime);
+        tooltipContent.appendChild(eventItem);
+    });
+    
+    tooltip.appendChild(tooltipContent);
+    return tooltip;
+}
+
+function showEventsForDate(dateString) {
+    const eventsForDate = homeCalendarEvents.filter(event => event.date === dateString);
+    const meetingInfo = document.querySelector('.meeting-info');
+    
+    if (eventsForDate.length > 0) {
+        // Clear existing content
+        meetingInfo.innerHTML = '';
+        
+        // Create events container
+        const eventsContainer = document.createElement('div');
+        eventsContainer.className = 'events-container';
+        
+        eventsForDate.forEach((event, index) => {
+            const eventCard = document.createElement('div');
+            eventCard.className = 'event-card';
+            
+            // Event header with title and actions
+            const eventHeader = document.createElement('div');
+            eventHeader.className = 'event-header';
+            
+            const eventTitle = document.createElement('h4');
+            eventTitle.textContent = event.title;
+            
+            const eventActions = document.createElement('div');
+            eventActions.className = 'event-actions';
+            
+            const quickAddBtn = document.createElement('button');
+            quickAddBtn.className = 'quick-add-btn';
+            quickAddBtn.innerHTML = '<i class="fas fa-plus"></i>';
+            quickAddBtn.title = 'Add event';
+            quickAddBtn.addEventListener('click', () => showQuickAddEventModal());
+            
+            const moreBtn = document.createElement('i');
+            moreBtn.className = 'fas fa-ellipsis-h';
+            moreBtn.style.cursor = 'pointer';
+            moreBtn.style.color = '#9ca3af';
+            
+            eventActions.appendChild(quickAddBtn);
+            eventActions.appendChild(moreBtn);
+            eventHeader.appendChild(eventTitle);
+            eventHeader.appendChild(eventActions);
+            
+            // Event time
+            const eventTime = document.createElement('p');
+            eventTime.className = 'event-time';
+            const today = new Date();
+            const eventDate = new Date(dateString);
+            const isToday = eventDate.toDateString() === today.toDateString();
+            eventTime.textContent = isToday ? `Today • ${event.time}` : `${eventDate.toLocaleDateString()} • ${event.time}`;
+            
+            // Event details with icon and location
+            const eventDetails = document.createElement('div');
+            eventDetails.className = 'event-details';
+            
+            // Event type icon
+            const eventIcon = document.createElement('div');
+            eventIcon.className = 'event-icon';
+            
+            let iconClass = 'fas fa-calendar';
+            if (event.type === 'meeting') {
+                iconClass = 'fas fa-video';
+            } else if (event.type === 'deadline') {
+                iconClass = 'fas fa-clock';
+            } else if (event.type === 'event') {
+                iconClass = 'fas fa-star';
+            }
+            
+            eventIcon.innerHTML = `<i class="${iconClass}"></i>`;
+            
+            // Event location/type
+            const eventLocation = document.createElement('span');
+            eventLocation.textContent = event.location || event.type;
+            
+            // Attendees section
+            const attendees = document.createElement('div');
+            attendees.className = 'attendees';
+            
+            if (event.attendees && event.attendees > 0) {
+                // Create attendee avatars
+                for (let i = 0; i < Math.min(event.attendees, 2); i++) {
+                    const attendeeAvatar = document.createElement('div');
+                    attendeeAvatar.className = 'attendee-avatar';
+                    const img = document.createElement('img');
+                    img.src = `https://api.dicebear.com/9.x/micah/svg?seed=Attendee${i + 1}`;
+                    img.alt = 'Attendee';
+                    attendeeAvatar.appendChild(img);
+                    attendees.appendChild(attendeeAvatar);
+                }
+                
+                // Show additional attendees count
+                if (event.attendees > 2) {
+                    const attendeeCount = document.createElement('span');
+                    attendeeCount.className = 'attendee-count';
+                    attendeeCount.textContent = `+${event.attendees - 2}`;
+                    attendees.appendChild(attendeeCount);
+                }
+            }
+            
+            eventDetails.appendChild(eventIcon);
+            eventDetails.appendChild(eventLocation);
+            eventDetails.appendChild(attendees);
+            
+            // Assemble the card
+            eventCard.appendChild(eventHeader);
+            eventCard.appendChild(eventTime);
+            eventCard.appendChild(eventDetails);
+            
+            eventsContainer.appendChild(eventCard);
+        });
+        
+        meetingInfo.appendChild(eventsContainer);
+        
+    } else {
+        // Show empty state
+        meetingInfo.innerHTML = `
+            <div class="empty-events-state">
+                <div class="empty-events-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <h4>No events scheduled</h4>
+                <p>Click the + button to add an event</p>
+                <button class="add-first-event-btn">
+                    <i class="fas fa-plus"></i>
+                    Add Event
+                </button>
+            </div>
+        `;
+        
+        // Add event listener to the add button
+        const addBtn = meetingInfo.querySelector('.add-first-event-btn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => showQuickAddEventModal());
+        }
     }
 }
 
@@ -508,6 +803,78 @@ export function getWeekStartForHomeCalendar() {
     const weekStart = new Date(selectedDate);
     weekStart.setDate(selectedDate.getDate() - daysToSubtract);
     return weekStart;
+}
+
+function showQuickAddEventModal() {
+    // Create a simple modal for quick event addition
+    const modal = document.createElement('div');
+    modal.className = 'quick-event-modal';
+    modal.innerHTML = `
+        <div class="quick-event-content">
+            <div class="quick-event-header">
+                <h3>Add Event</h3>
+                <button class="close-quick-modal">&times;</button>
+            </div>
+            <div class="quick-event-body">
+                <div class="form-group">
+                    <label>Event Title</label>
+                    <input type="text" id="quickEventTitle" placeholder="Enter event title">
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" id="quickEventTime">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="quickEventType">
+                        <option value="meeting">Meeting</option>
+                        <option value="event">Event</option>
+                        <option value="deadline">Deadline</option>
+                    </select>
+                </div>
+            </div>
+            <div class="quick-event-footer">
+                <button class="cancel-quick-event">Cancel</button>
+                <button class="save-quick-event">Save Event</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add event listeners
+    const closeBtn = modal.querySelector('.close-quick-modal');
+    const cancelBtn = modal.querySelector('.cancel-quick-event');
+    const saveBtn = modal.querySelector('.save-quick-event');
+    
+    const closeModal = () => {
+        document.body.removeChild(modal);
+    };
+    
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    
+    saveBtn.addEventListener('click', () => {
+        const title = document.getElementById('quickEventTitle').value;
+        const time = document.getElementById('quickEventTime').value;
+        const type = document.getElementById('quickEventType').value;
+        
+        if (title.trim()) {
+            const newEvent = {
+                id: Date.now(),
+                title: title,
+                date: homeCalendarSelectedDate.toISOString().split('T')[0],
+                time: time,
+                type: type,
+                attendees: 1
+            };
+            
+            homeCalendarEvents.push(newEvent);
+            updateHomeCalendarDisplay();
+            showEventsForDate(newEvent.date);
+            closeModal();
+        }
+    });
 }
 
 // Legacy functions for backward compatibility
