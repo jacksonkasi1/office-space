@@ -6,7 +6,7 @@
 
 **IntraSpace** is a cutting-edge productivity platform that combines AI assistance, project management, team communication, and resource management into one seamless digital workspace. Built entirely with vanilla HTML, CSS, and JavaScript, it provides everything teams need to collaborate effectively while reducing app-switching and boosting productivity.
 
-> 🏆 **Winner Submission** for [Frontend Challenge: Office Edition](https://dev.to/challenges/frontend/axero) sponsored by Axero
+> 🏆 **Hackathon Submission** for [Frontend Challenge: Office Edition](https://dev.to/challenges/frontend/axero) sponsored by Axero
 
 ## ✨ Key Features
 
