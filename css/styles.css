@@ -538,6 +538,7 @@ section .section-header h3 {
     display: flex;
     align-items: center;
     flex: 1;
+    padding: 0 10px;
 }
 
 .toggle-icon {
@@ -571,6 +572,7 @@ section .section-header h3 {
     align-items: center;
     gap: 8px;
     align-self: stretch;
+    padding: 0 10px;
 }
 
 .toggle-label {
