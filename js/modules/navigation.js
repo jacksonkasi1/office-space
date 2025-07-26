@@ -137,6 +137,14 @@ export function renderCalendarPage(container) {
                             <div class="day-name">Friday</div>
                             <div class="day-date">9</div>
                         </div>
+                        <div class="day-header">
+                            <div class="day-name">Saturday</div>
+                            <div class="day-date">10</div>
+                        </div>
+                        <div class="day-header">
+                            <div class="day-name">Sunday</div>
+                            <div class="day-date">11</div>
+                        </div>
                     </div>
                     
                     <div class="calendar-events">
@@ -240,6 +248,37 @@ export function renderCalendarPage(container) {
                                     </div>
                                     <div class="attendee-avatar">
                                         <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee13" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 1 / 3; grid-column: 6;">
+                            <div class="event-content">
+                                <h4>Weekend Planning</h4>
+                                <p>08:00 - 09:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag internal">Internal</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee14" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee15" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 3 / 5; grid-column: 7;">
+                            <div class="event-content">
+                                <h4>Sunday Review</h4>
+                                <p>09:00 - 10:00 AM</p>
+                                <p>Room 02</p>
+                                <div class="event-tag external">External</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee16" alt="Attendee">
                                     </div>
                                 </div>
                             </div>
