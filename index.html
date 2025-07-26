@@ -276,8 +276,18 @@
                             <i class="fas fa-calendar"></i>
                             <h3>Calendar</h3>
                             <div class="header-actions">
-                                <span>July</span>
-                                <i class="fas fa-chevron-down"></i>
+                                <div class="calendar-month-selector">
+                                    <span class="current-month">July</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="calendar-nav">
+                                    <button class="nav-btn prev-month" title="Previous month">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="nav-btn next-month" title="Next month">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="calendar-widget">
@@ -290,17 +300,13 @@
                                 <div class="day-header">Wed</div>
                                 <div class="day-header">Thu</div>
                                 
-                                <div class="date">04</div>
-                                <div class="date">05</div>
-                                <div class="date">06</div>
-                                <div class="date current">07</div>
-                                <div class="date">08</div>
-                                <div class="date">09</div>
-                                <div class="date">10</div>
-                            </div>
-                            <div class="calendar-nav">
-                                <i class="fas fa-chevron-left"></i>
-                                <i class="fas fa-chevron-right"></i>
+                                <div class="date" data-date="2024-07-05">05</div>
+                                <div class="date" data-date="2024-07-06">06</div>
+                                <div class="date" data-date="2024-07-07">07</div>
+                                <div class="date current" data-date="2024-07-08">08</div>
+                                <div class="date" data-date="2024-07-09">09</div>
+                                <div class="date" data-date="2024-07-10">10</div>
+                                <div class="date" data-date="2024-07-11">11</div>
                             </div>
                         </div>
                         <div class="meeting-info">

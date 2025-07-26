@@ -6,6 +6,11 @@ let currentYear = 2022;
 let currentView = 'week'; // day, week, month
 let selectedDate = new Date(2022, 11, 9); // December 9, 2022
 
+// Home page calendar widget state
+let homeCalendarMonth = 6; // July (0-indexed)
+let homeCalendarYear = 2024;
+let homeCalendarSelectedDate = new Date(2024, 6, 8); // July 8, 2024
+
 // Month names for display
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -379,6 +384,130 @@ export function getWeekStart(date) {
     const day = d.getDay();
     const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
     return new Date(d.setDate(diff));
+}
+
+// Home page calendar widget functions
+export function initializeHomeCalendar() {
+    const prevBtn = document.querySelector('.prev-month');
+    const nextBtn = document.querySelector('.next-month');
+    const monthSelector = document.querySelector('.calendar-month-selector');
+    const dateElements = document.querySelectorAll('.calendar-grid .date');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => navigateHomeCalendarMonth(-1));
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => navigateHomeCalendarMonth(1));
+    }
+    
+    if (monthSelector) {
+        monthSelector.addEventListener('click', () => {
+            // Could open a month picker dropdown here
+            console.log('Month selector clicked');
+        });
+    }
+    
+    // Add click handlers to date elements
+    dateElements.forEach(date => {
+        date.addEventListener('click', function() {
+            // Remove current class from all dates
+            dateElements.forEach(d => d.classList.remove('current'));
+            // Add current class to clicked date
+            this.classList.add('current');
+            
+            // Update selected date
+            const dateValue = this.getAttribute('data-date');
+            if (dateValue) {
+                homeCalendarSelectedDate = new Date(dateValue);
+                updateHomeCalendarDisplay();
+            }
+        });
+    });
+    
+    // Initialize display
+    updateHomeCalendarDisplay();
+}
+
+export function navigateHomeCalendarMonth(direction) {
+    // Navigate by weeks instead of months for the home calendar
+    const currentDate = new Date(homeCalendarSelectedDate);
+    currentDate.setDate(currentDate.getDate() + (direction * 7));
+    
+    homeCalendarSelectedDate = currentDate;
+    homeCalendarMonth = currentDate.getMonth();
+    homeCalendarYear = currentDate.getFullYear();
+    
+    updateHomeCalendarDisplay();
+}
+
+export function updateHomeCalendarDisplay() {
+    // Update month display based on the selected date
+    const monthDisplay = document.querySelector('.current-month');
+    if (monthDisplay) {
+        const selectedDate = new Date(homeCalendarSelectedDate);
+        monthDisplay.textContent = months[selectedDate.getMonth()];
+    }
+    
+    // Update calendar grid with new dates
+    updateHomeCalendarGrid();
+}
+
+export function updateHomeCalendarGrid() {
+    const calendarGrid = document.querySelector('.calendar-grid');
+    if (!calendarGrid) return;
+    
+    // Keep the day headers
+    const dayHeaders = calendarGrid.querySelectorAll('.day-header');
+    
+    // Clear existing date elements
+    const dateElements = calendarGrid.querySelectorAll('.date');
+    dateElements.forEach(el => el.remove());
+    
+    // Re-add day headers
+    dayHeaders.forEach(header => {
+        calendarGrid.appendChild(header);
+    });
+    
+    // Calculate the week start (Friday for this layout)
+    const weekStart = getWeekStartForHomeCalendar();
+    
+    // Generate dates for the week view
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + i);
+        
+        const dateElement = document.createElement('div');
+        dateElement.className = 'date';
+        dateElement.textContent = date.getDate();
+        dateElement.setAttribute('data-date', date.toISOString().split('T')[0]);
+        
+        // Check if this is the current date
+        const today = new Date();
+        if (date.toDateString() === today.toDateString()) {
+            dateElement.classList.add('current');
+        }
+        
+        // Add click handler
+        dateElement.addEventListener('click', function() {
+            document.querySelectorAll('.calendar-grid .date').forEach(d => d.classList.remove('current'));
+            this.classList.add('current');
+            homeCalendarSelectedDate = new Date(this.getAttribute('data-date'));
+        });
+        
+        calendarGrid.appendChild(dateElement);
+    }
+}
+
+export function getWeekStartForHomeCalendar() {
+    // For the home calendar, we want to show a week starting from Friday
+    // Calculate based on the selected date
+    const selectedDate = new Date(homeCalendarSelectedDate);
+    const dayOfWeek = selectedDate.getDay();
+    const daysToSubtract = (dayOfWeek + 2) % 7; // Adjust to start from Friday
+    const weekStart = new Date(selectedDate);
+    weekStart.setDate(selectedDate.getDate() - daysToSubtract);
+    return weekStart;
 }
 
 // Legacy functions for backward compatibility

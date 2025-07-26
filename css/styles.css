@@ -1034,15 +1034,38 @@ section .section-header h3 {
     transform: none;
 }
 
-.calendar-nav {
-    position: absolute;
-    top: -8px;
-    right: 0;
+/* Calendar Header Actions */
+.calendar-month-selector {
     display: flex;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
 }
 
-.calendar-nav i {
+.calendar-month-selector:hover {
+    background-color: #f3f4f6;
+}
+
+.calendar-month-selector .current-month {
+    font-weight: 600;
+    color: #374151;
+}
+
+.calendar-month-selector i {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+}
+
+.calendar-nav .nav-btn {
     width: 28px;
     height: 28px;
     display: flex;
@@ -1053,11 +1076,36 @@ section .section-header h3 {
     border-radius: 6px;
     transition: all 0.2s ease;
     font-size: 12px;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
-.calendar-nav i:hover {
+.calendar-nav .nav-btn:hover {
     background-color: #f3f4f6;
     color: #374151;
+}
+
+.calendar-nav .nav-btn:active {
+    transform: scale(0.95);
+}
+
+/* Responsive calendar navigation */
+@media (max-width: 768px) {
+    .calendar-section .header-actions {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .calendar-nav {
+        margin-left: 0;
+        margin-top: 4px;
+    }
+    
+    .calendar-month-selector {
+        font-size: 14px;
+    }
 }
 
 /* Meeting Info */

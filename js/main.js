@@ -6,7 +6,7 @@ import { renderKanbanBoard, renderTasksContent, initializeKanbanBoard, initializ
 import { renderResourcesContent, renderBlogsContent } from './modules/resourcesBlogs.js';
 import { initializeCollapsibleSections } from './modules/collapsible.js';
 import { initializeProjectActions, createNewProjectDialog } from './modules/projects.js';
-import { initializeCalendar, navigateMonth, updateCalendarDisplay, initializeCalendarPage, openMeetingModal, closeMeetingModal, saveMeeting, copyMeetingLink, addInvitee } from './modules/calendar.js';
+import { initializeCalendar, navigateMonth, updateCalendarDisplay, initializeCalendarPage, openMeetingModal, closeMeetingModal, saveMeeting, copyMeetingLink, addInvitee, initializeHomeCalendar } from './modules/calendar.js';
 import { initializeSpotlightTabs, showSpotlightContent } from './modules/spotlight.js';
 import { initializeFAB, showQuickActions, handleQuickAction } from './modules/fab.js';
 import { initializeDaisyAI, sendDaisyMessage, addDaisyMessage, generateDaisyResponse, handleDaisyQuickAction, applySuggestion, addRecentActivity, clearDaisyChat, attachFile, toggleVoice } from './modules/daisy.js';
@@ -44,6 +44,7 @@ import { formatDate, debounce, initializeTheme } from './modules/utils.js';
     window.handleTaskSubmit = handleTaskSubmit;
     window.initializeCalendar = initializeCalendar;
     window.initializeCalendarPage = initializeCalendarPage;
+    window.initializeHomeCalendar = initializeHomeCalendar;
     window.openMeetingModal = openMeetingModal;
     window.closeMeetingModal = closeMeetingModal;
     window.saveMeeting = saveMeeting;
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCollapsibleSections();
     initializeProjectActions();
     initializeCalendar();
+    initializeHomeCalendar();
     initializeSpotlightTabs();
     initializeFAB();
     // Optionally initialize other features
