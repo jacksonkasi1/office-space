@@ -165,7 +165,7 @@ export function renderDaisyAI(container) {
                     <div class="insights-content">
                         <div class="insight-item">
                             <div class="insight-icon productivity">
-                                <i class="fas fa-trending-up"></i>
+                                <i class="fas fa-chart-line"></i>
                             </div>
                             <div class="insight-info">
                                 <h5>Productivity Boost</h5>

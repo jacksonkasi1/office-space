@@ -4797,6 +4797,7 @@ section .section-header h3 {
     color: #9ca3af;
     font-weight: 500;
     min-width: 60px;
+    margin-left: 12px;
 }
 
 .activity-desc {
