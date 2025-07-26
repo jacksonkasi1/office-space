@@ -512,7 +512,7 @@ section .section-header h3 {
 }
 
 .collapsible-section {
-    border: 1px solid #6366f1;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     overflow: hidden;
 }
