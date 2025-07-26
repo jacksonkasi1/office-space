@@ -1,12 +1,15 @@
 // Module: navigation
 export function initializeNavigation() {
+    console.log('Initializing navigation...');
     if (!window.navItems) {
         window.navItems = document.querySelectorAll('.nav-item a');
+        console.log('Found nav items:', window.navItems.length);
     }
     
     window.navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Nav item clicked:', this.getAttribute('data-page'));
             
             // Remove active class from all nav items
             window.navItems.forEach(nav => nav.parentElement.classList.remove('active'));
@@ -47,6 +50,399 @@ export function updateActiveNavigation(page) {
 }
 
 
+export function renderCalendarPage(container) {
+    console.log('Rendering calendar page...');
+    container.innerHTML = `
+        <div class="calendar-page">
+            <!-- Main Calendar Area -->
+            <div class="calendar-main">
+                <!-- Calendar Header -->
+                <div class="calendar-header">
+                    <div class="calendar-title">
+                        <h2>Calendar</h2>
+                        <button class="create-event-btn" onclick="openMeetingModal()">
+                            <i class="fas fa-plus"></i>
+                            Create Event
+                        </button>
+                    </div>
+                    <div class="calendar-controls">
+                        <div class="date-navigation">
+                            <button class="nav-btn prev-month">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h3 class="current-month">Dec, 2022</h3>
+                            <button class="nav-btn next-month">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="today-btn">Today</button>
+                        </div>
+                        <div class="view-controls">
+                            <select class="view-selector">
+                                <option value="day">Day</option>
+                                <option value="week" selected>Week</option>
+                                <option value="month">Month</option>
+                            </select>
+                            <button class="filter-btn">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid-container">
+                    <div class="time-column">
+                        <div class="time-header"></div>
+                        <div class="time-slots">
+                            <div class="time-slot">08:00 AM</div>
+                            <div class="time-slot">08:30 AM</div>
+                            <div class="time-slot">09:00 AM</div>
+                            <div class="time-slot">09:30 AM</div>
+                            <div class="time-slot">10:00 AM</div>
+                            <div class="time-slot">10:30 AM</div>
+                            <div class="time-slot">11:00 AM</div>
+                            <div class="time-slot">11:30 AM</div>
+                            <div class="time-slot">12:00 PM</div>
+                            <div class="time-slot">12:30 PM</div>
+                            <div class="time-slot">01:00 PM</div>
+                            <div class="time-slot">01:30 PM</div>
+                            <div class="time-slot">02:00 PM</div>
+                            <div class="time-slot">02:30 PM</div>
+                            <div class="time-slot">03:00 PM</div>
+                            <div class="time-slot">03:30 PM</div>
+                            <div class="time-slot">04:00 PM</div>
+                            <div class="time-slot">04:30 PM</div>
+                            <div class="time-slot">05:00 PM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-days">
+                        <div class="day-header">
+                            <div class="day-name">Monday</div>
+                            <div class="day-date">5</div>
+                        </div>
+                        <div class="day-header">
+                            <div class="day-name">Tuesday</div>
+                            <div class="day-date">6</div>
+                        </div>
+                        <div class="day-header">
+                            <div class="day-name">Wednesday</div>
+                            <div class="day-date">7</div>
+                        </div>
+                        <div class="day-header">
+                            <div class="day-name">Thursday</div>
+                            <div class="day-date">8</div>
+                        </div>
+                        <div class="day-header">
+                            <div class="day-name">Friday</div>
+                            <div class="day-date">9</div>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-events">
+                        <div class="event-block" style="grid-row: 1 / 3; grid-column: 1;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>08:00 - 09:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag internal">Internal</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee1" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee2" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee3" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 5 / 7; grid-column: 1;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>10:00 - 11:00 AM</p>
+                                <p>Room 02</p>
+                                <div class="event-tag external">External</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee4" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 1 / 5; grid-column: 2;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>08:00 - 10:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag external">External</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee5" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee6" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 3 / 5; grid-column: 4;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>09:00 - 10:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag internal">Internal</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee7" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee8" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 1 / 3; grid-column: 5;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>08:00 - 09:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag internal">Internal</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee9" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee10" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="event-block" style="grid-row: 5 / 7; grid-column: 5;">
+                            <div class="event-content">
+                                <h4>Meeting title</h4>
+                                <p>10:00 - 11:00 AM</p>
+                                <p>Room 02</p>
+                                <div class="event-tag external">External</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee11" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee12" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee13" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="calendar-sidebar">
+                <!-- Mini Calendar -->
+                <div class="mini-calendar">
+                    <div class="mini-calendar-header">
+                        <h4>Dec, 2022</h4>
+                        <div class="mini-calendar-nav">
+                            <button class="mini-nav-btn prev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="mini-nav-btn next">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mini-calendar-grid">
+                        <div class="mini-day-header">Mon</div>
+                        <div class="mini-day-header">Tue</div>
+                        <div class="mini-day-header">Wed</div>
+                        <div class="mini-day-header">Thu</div>
+                        <div class="mini-day-header">Fri</div>
+                        <div class="mini-day-header">Sat</div>
+                        <div class="mini-day-header">Sun</div>
+                        
+                        <div class="mini-date">29</div>
+                        <div class="mini-date">30</div>
+                        <div class="mini-date">1</div>
+                        <div class="mini-date">2</div>
+                        <div class="mini-date">3</div>
+                        <div class="mini-date">4</div>
+                        <div class="mini-date">5</div>
+                        <div class="mini-date">6</div>
+                        <div class="mini-date">7</div>
+                        <div class="mini-date">8</div>
+                        <div class="mini-date selected">9</div>
+                        <div class="mini-date">10</div>
+                        <div class="mini-date">11</div>
+                        <div class="mini-date">12</div>
+                        <div class="mini-date">13</div>
+                        <div class="mini-date">14</div>
+                        <div class="mini-date">15</div>
+                        <div class="mini-date">16</div>
+                        <div class="mini-date">17</div>
+                        <div class="mini-date">18</div>
+                        <div class="mini-date">19</div>
+                        <div class="mini-date">20</div>
+                        <div class="mini-date">21</div>
+                        <div class="mini-date">22</div>
+                        <div class="mini-date">23</div>
+                        <div class="mini-date">24</div>
+                        <div class="mini-date">25</div>
+                        <div class="mini-date">26</div>
+                        <div class="mini-date">27</div>
+                        <div class="mini-date">28</div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="upcoming-events">
+                    <div class="upcoming-header">
+                        <h4>Upcoming events</h4>
+                    </div>
+                    <div class="upcoming-list">
+                        <div class="upcoming-event">
+                            <div class="event-time-badge">In 10 mins</div>
+                            <div class="event-content">
+                                <h5>Meeting title</h5>
+                                <p>08:00 - 09:00 AM</p>
+                                <p>Room 01</p>
+                                <div class="event-tag internal">Internal</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee1" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee2" alt="Attendee">
+                                    </div>
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee3" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upcoming-event">
+                            <div class="event-content">
+                                <h5>Meeting title</h5>
+                                <p>10:00 - 11:00 AM</p>
+                                <p>Room 02</p>
+                                <div class="event-tag external">External</div>
+                                <div class="event-attendees">
+                                    <div class="attendee-avatar">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Attendee4" alt="Attendee">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Meeting Modal -->
+            <div class="meeting-modal" id="meetingModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add Meeting</h3>
+                        <button class="close-modal" onclick="closeMeetingModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="meetingName">Meeting Name</label>
+                            <input type="text" id="meetingName" placeholder="Meeting Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingDate">Date</label>
+                            <div class="date-input">
+                                <input type="text" id="meetingDate" value="Tue, Jul 18" readonly>
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingTime">Time</label>
+                            <div class="time-input">
+                                <input type="text" id="meetingTime" value="09:00 - 09:30 AM" readonly>
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingLocation">Location</label>
+                            <div class="location-input">
+                                <input type="text" id="meetingLocation" value="Room 01">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingLink">Online Link</label>
+                            <div class="link-input">
+                                <input type="text" id="meetingLink" value="Link.com">
+                                <button class="copy-btn" onclick="copyMeetingLink()">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Invitees</label>
+                            <div class="invitees-container">
+                                <div class="selected-invitees">
+                                    <div class="invitee-tag">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Emily+Taylor" alt="Emily Taylor">
+                                        <span>Emily Taylor</span>
+                                        <button class="remove-invitee">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invitee-tag">
+                                        <img src="https://api.dicebear.com/9.x/micah/svg?seed=Jennifer+Scott" alt="Jennifer Scott">
+                                        <span>Jennifer Scott</span>
+                                        <button class="remove-invitee">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="add-invitee-btn" onclick="addInvitee()">
+                                    <i class="fas fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="advanced-settings-btn">
+                                <i class="fas fa-cog"></i>
+                                Advanced settings
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="save-meeting-btn" onclick="saveMeeting()">
+                            <i class="fas fa-check"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Initialize calendar functionality
+    setTimeout(() => {
+        console.log('Initializing calendar page...');
+        initializeCalendarPage();
+    }, 100);
+}
+
 export function updateMainContent(page) {
     const greeting = document.querySelector('.greeting');
     const dashboardContent = document.querySelector('.dashboard-content');
@@ -76,6 +472,7 @@ export function updateMainContent(page) {
                 window.initializeCollapsibleSections();
                 window.initializeSpotlightTabs();
                 window.initializeTabs(); // Re-initialize tab functionality
+                window.initializeCalendar(); // Re-initialize the home page calendar widget
             }, 100);
             break;
             
@@ -108,10 +505,7 @@ export function updateMainContent(page) {
             tabNavigation.style.display = 'none';
             greeting.style.display = 'block';
             document.querySelector('.sidebar').style.display = 'block';
-            dashboardContent.innerHTML = window.originalContent.dashboard;
-            setTimeout(() => {
-                window.initializeCalendar();
-            }, 100);
+            renderCalendarPage(dashboardContent);
             break;
             
         case 'team-chat':

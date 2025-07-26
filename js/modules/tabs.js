@@ -1,11 +1,15 @@
 // Module: tabs
 export function initializeTabs() {
+    console.log('Initializing tabs...');
     if (!window.tabBtns) {
         window.tabBtns = document.querySelectorAll('.tab-btn');
+        console.log('Found tab buttons:', window.tabBtns.length);
     }
     
     window.tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
+            console.log('Tab clicked:', this.getAttribute('data-tab'));
+            
             // Remove active class from all tabs
             window.tabBtns.forEach(tab => tab.classList.remove('active'));
             
